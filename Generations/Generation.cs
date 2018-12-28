@@ -1,4 +1,5 @@
 ﻿namespace GeneticAlgorithms {
+    // Abstract class that defines the minimum requisites for each type of Generation.
     public abstract class Generation<TGene> : IQueryableByTerminationCondition {
         protected IChromosomeInt<TGene>[] _chromosomes;
         public int GenerationCount { get; private set; } = 0;

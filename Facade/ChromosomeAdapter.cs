@@ -1,6 +1,11 @@
 ﻿using System;
-
 namespace GeneticAlgorithms {
+
+    /// <summary>
+    /// This class works as an adapter of the real chromosome to cover some features.
+    ///  - It implement lazy pattern of the value of Fitness to avoid heavy calcs.
+    ///  - It implements IComparable using Fitness as value to compare.
+    /// </summary>
     internal class ChromosomeAdapter<TGene> : IChromosomeInt<TGene>, IComparable<IChromosomeInt<TGene>> {
         private IChromosomeInt<TGene> _chromosome;
 
@@ -8,6 +13,7 @@ namespace GeneticAlgorithms {
         private int? _cachedFitness;
         public int Fitness => (_cachedFitness ?? (_cachedFitness = _chromosome.Fitness)).Value;
 
+        // Array like interface to access genes by their locus.
         public int Length => _chromosome.Length;
         public TGene this[int index] {
             get => _chromosome[index];
@@ -17,6 +23,7 @@ namespace GeneticAlgorithms {
             }
         }
 
+        // Constructor
         public ChromosomeAdapter(IChromosomeInt<TGene> chromosome) => _chromosome = chromosome;
 
         // ICromosomeInt implementation

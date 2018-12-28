@@ -1,9 +1,13 @@
 ﻿namespace GeneticAlgorithms {
+
+    // This interface is used to group all states in one whole.
+    // If some types in the future can have subsets of this group 
     internal interface IGrouped<TGene> :
         IInitialClass, IGenerationSetted, IReplacementSetted,
         ISelectionSetted, ICrossoverSetted, IMutationSetted,
         ITerminationConditionSetted, IFinalClass<TGene> { }
 
+    // Viable states that are covered by Facade
     public interface IInitialClass { }
     public interface IGenerationSetted { }
     public interface IReplacementSetted { }
@@ -13,6 +17,7 @@
     public interface ITerminationConditionSetted { }
     public interface IFinalClass<TGene> { SolutionInt<TGene> Run(); }
 
+    // All actions viable by the interface sorted by interface used as "this parameter"
     public static class SomeFluentExtensions {
         public static IGenerationSetted FitnessSortedGeneration<TGene>(this IInitialClass item, IChromosomeInt<TGene>[] chromosomes) {
             ((Executor<TGene>)item).DoSetGeneration(chromosomes);
@@ -52,7 +57,7 @@
         public static IFinalClass<TGene> Done<TGene>(this ITerminationConditionSetted item) => ((Executor<TGene>)item).DoDone();
     }
 
-
+    // Partial class that implements the facade part of the class, all DoActions are sorted by operator type.
     public partial class Executor<TGene> : IGrouped<TGene> {
         // Limitation needed at the construction phase.
         private Executor() { }

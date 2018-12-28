@@ -1,4 +1,9 @@
 ﻿namespace GeneticAlgorithms {
+    /// <summary>
+    /// This Crossover Operator do the crossover of each locus 
+    /// selecting one of the parents gene at 50% of chance each.
+    /// </summary>
+    /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
     class UniformBreeder<TGene> : ICrossoverInt {
         private Generation<TGene> _generation;
 

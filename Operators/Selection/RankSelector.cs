@@ -1,5 +1,10 @@
 ﻿namespace GeneticAlgorithms {
     // TODO: It needs to be tested.
+    /// <summary>
+    /// This Selection Operator weights chance to be selected for each chromosome
+    /// by sorting them fitness desc and giving a fixed step of more value for those with higher fitness.
+    /// </summary>
+    /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
     public partial class RankSelector<TGene> : IFitnessSortedSelectionInt {
         private FitnessSortedGeneration<TGene> _generation;
         private int _n, _nsum;

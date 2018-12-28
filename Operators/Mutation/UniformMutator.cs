@@ -1,4 +1,8 @@
 ﻿namespace GeneticAlgorithms {
+    /// <summary>
+    /// This Mutation Operator mutate each Gene with a immutable chance.
+    /// </summary>
+    /// <typeparam name="TGene"></typeparam>
     class UniformMutator<TGene> : IMutationInt {
         private Generation<TGene> _generation;
         private bool _elitism;

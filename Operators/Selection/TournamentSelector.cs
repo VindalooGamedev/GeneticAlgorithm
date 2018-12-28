@@ -1,4 +1,10 @@
 ﻿namespace GeneticAlgorithms {
+    /// <summary>
+    /// This Selection Operator selects randomly k parents and choose the one with higher fitness.
+    /// This operator uses FitnessSortedGeneration so to select the higher 
+    /// fitness just need to select the lower index of parent selected.
+    /// </summary>
+    /// <typeparam name="TGene"></typeparam>
     public class TournamentSelector<TGene> : IFitnessSortedSelectionInt {
         private FitnessSortedGeneration<TGene> _generation;
         private int _k, 
