@@ -4,7 +4,7 @@
     /// This operator uses FitnessSortedGeneration so to select the higher 
     /// fitness just need to select the lower index of parent selected.
     /// </summary>
-    /// <typeparam name="TGene"></typeparam>
+    /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
     public class TournamentSelector<TGene> : IFitnessSortedSelectionInt {
         private FitnessSortedGeneration<TGene> _generation;
         private int _k, 

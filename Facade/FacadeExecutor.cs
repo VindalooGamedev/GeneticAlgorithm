@@ -1,4 +1,6 @@
-﻿namespace GeneticAlgorithms {
+﻿using System;
+
+namespace GeneticAlgorithms {
 
     // This interface is used to group all states in one whole.
     // If some types in the future can have subsets of this group 
@@ -36,6 +38,11 @@
 
         public static ISelectionSetted RankSelector<TGene>(this IReplacementSetted item) {
             ((Executor<TGene>)item).DoSetRankSelector();
+            return (ISelectionSetted)item;
+        }
+
+        public static ISelectionSetted RouletteWheelSelector<TGene>(this IReplacementSetted item) {
+            ((Executor<TGene>)item).DoSetRouletteWheelSelector();
             return (ISelectionSetted)item;
         }
 
@@ -78,6 +85,9 @@
         protected internal void DoSetRankSelector() 
             => _parentSelector = new RankSelector<TGene>(_generation);
 
+        internal void DoSetRouletteWheelSelector() 
+            => _parentSelector = new RouletteWheelSelectorInt<TGene>(_generation);
+
         // Crossover Strategy.
         protected internal void DoSetCrossover() 
             => _breeder = new UniformBreeder<TGene>(_generation);
@@ -92,5 +102,6 @@
 
         // Last step that reveals the interface to be used.
         internal virtual IFinalClass<TGene> DoDone() => this;
+
     }
 }

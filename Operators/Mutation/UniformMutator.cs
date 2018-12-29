@@ -1,8 +1,8 @@
 ﻿namespace GeneticAlgorithms {
     /// <summary>
-    /// This Mutation Operator mutate each Gene with a immutable chance.
+    /// This Mutation Operator mutate each Gene idependently with an immutable chance.
     /// </summary>
-    /// <typeparam name="TGene"></typeparam>
+    /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
     class UniformMutator<TGene> : IMutationInt {
         private Generation<TGene> _generation;
         private bool _elitism;
