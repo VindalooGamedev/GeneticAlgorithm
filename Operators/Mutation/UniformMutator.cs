@@ -4,11 +4,11 @@
     /// </summary>
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
     class UniformMutator<TGene> : IMutationInt {
-        private Generation<TGene> _generation;
+        private FitnessSortedGeneration<TGene> _generation;
         private bool _elitism;
         private int _chance, _of;
 
-        public UniformMutator(Generation<TGene> generation, int chance, int of, bool elitism) {
+        public UniformMutator(FitnessSortedGeneration<TGene> generation, int chance, int of, bool elitism) {
             _generation = generation;
             _chance = chance;
             _of = of;

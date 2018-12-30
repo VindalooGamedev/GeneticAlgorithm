@@ -5,20 +5,16 @@
     /// the higher the fitness the higher the chance to be selected to be a parent.
     /// </summary>
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
-    public partial class RouletteWheelSelectorInt<TGene> : IFitnessSortedSelectionInt {
+    public partial class RouletteWheelSelectorInt<TGene> : ISelectionInt, ISteadyStateSelectionInt {
         private Generation<TGene> _generation;
         private int _fitnessSum;
 
         public RouletteWheelSelectorInt(Generation<TGene> generation) => _generation = generation;
 
-        public (int, int)[] GetPairedParents() {
+        public (int, int)[] GetPairedParentsForEveryOffspring() {
             // Preparing the scope.
             (int, int)[] pairedParents = new(int, int)[_generation.OffspringLength];
-
-            _fitnessSum = 0;
-            for (int i = 0; i < _generation.ParentsLength; i++) {
-                _fitnessSum += _generation.GetParent(i).Fitness;
-            }
+            PrepareData();
 
             // Choose all pairs.
             for (var i = 0; i < pairedParents.Length; i++) {
@@ -26,6 +22,19 @@
                 pairedParents[i].Item2 = GetSecondParent(pairedParents[i].Item1);
             }
             return pairedParents;
+        }
+
+        private void PrepareData() {
+            _fitnessSum = 0;
+            for (int i = 0; i < _generation.ParentsLength; i++) {
+                _fitnessSum += _generation.GetParent(i).Fitness;
+            }
+        }
+
+        public (int, int) GetPairedParentsOnce() {
+            PrepareData();
+            int firstParent = GetFirstParent();
+            return (firstParent, GetSecondParent(firstParent));
         }
 
         private int GetFirstParent() {

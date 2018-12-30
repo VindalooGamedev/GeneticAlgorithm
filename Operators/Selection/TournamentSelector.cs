@@ -5,7 +5,7 @@
     /// fitness just need to select the lower index of parent selected.
     /// </summary>
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
-    public class TournamentSelector<TGene> : IFitnessSortedSelectionInt {
+    public class TournamentSelector<TGene> : ISelectionInt, ISteadyStateSelectionInt {
         private FitnessSortedGeneration<TGene> _generation;
         private int _k, 
                     _parentsAmount;
@@ -16,10 +16,10 @@
         }
 
         // Al ejecutar esto tiene que haber más de 1 offspring slot y k debe ser menor que la cantidad de parents
-        public (int, int)[] GetPairedParents() {
+        public (int, int)[] GetPairedParentsForEveryOffspring() {
             // prepare space and data to manage to choose pairs
             (int, int)[] pairedParents = new(int, int)[_generation.OffspringLength];
-            _parentsAmount = _generation.ParentsLength;
+            PrepareData();
 
             // Choose all pairs
             for (int i = 0; i < pairedParents.Length; i++) {
@@ -28,7 +28,15 @@
             }
             return pairedParents;
         }
-        
+
+        private void PrepareData() => _parentsAmount = _generation.ParentsLength;
+
+        public (int, int) GetPairedParentsOnce() {
+            PrepareData();
+            int firstParent = GetFirstParent();
+            return (firstParent, GetSecondParent(firstParent));
+        }
+
         private int GetFirstParent() => ParentSelected(_parentsAmount, _k);
 
         private int GetSecondParent(int otherParent) {

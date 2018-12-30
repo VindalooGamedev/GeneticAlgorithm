@@ -16,9 +16,14 @@ namespace GeneticAlgorithms {
 
         public override IChromosomeInt<TGene> GetParent(int index) => _chromosomes[index];
 
+        public override void SetParent(int parentIndex, IChromosomeInt<TGene> chromosome) 
+            => _chromosomes[parentIndex] = chromosome;
+
         public override IChromosomeInt<TGene> GetOffspring(int index)
             => _chromosomes[_chromosomes.Length - _offspringSlots + index];
 
+        public override void SetOffspring(int offspringIndex, IChromosomeInt<TGene> chromosome)
+            => _chromosomes[_chromosomes.Length - _offspringSlots + offspringIndex] = chromosome;
 
         private void SortByFitness() => Array.Sort(_chromosomes, (a, b) => b.Fitness - a.Fitness);
 
