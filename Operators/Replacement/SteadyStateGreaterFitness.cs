@@ -14,7 +14,7 @@ namespace GeneticAlgorithms {
                 _generation.GetOffspring(1)
             };
 
-            Array.Sort(_parentsAndOffsprings, (a, b) => a.Fitness - b.Fitness);
+            Array.Sort(_parentsAndOffsprings, (a, b) => b.Fitness - a.Fitness);
 
             _generation.SetParent(parents.Item1, _parentsAndOffsprings[0]);
             _generation.SetParent(parents.Item2, _parentsAndOffsprings[1]);

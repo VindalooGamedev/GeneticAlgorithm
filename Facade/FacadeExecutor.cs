@@ -94,7 +94,7 @@ namespace GeneticAlgorithms {
 
         // Mutation Strategy.
         protected internal void DoSetMutation(int chance, int of, bool elitism) 
-            => _mutator = new UniformMutator<TGene>(_generation, chance, of, elitism);
+            => _mutator = new UniformMutator<TGene>((FitnessSortedGeneration<TGene>)_generation, chance, of, elitism);
 
         // Termination Condition.
         protected internal void DoSetTerminationCondition(ITerminationConditionInt<TGene> terminationCondition) 
