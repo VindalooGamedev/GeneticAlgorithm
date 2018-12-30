@@ -1,5 +1,9 @@
 ﻿namespace GeneticAlgorithms {
     internal interface ICrossoverInt {
-        void Cross((int, int)[] parents);
+        void MultipleCross((int, int)[] parents);
+    }
+
+    internal interface ISteadyStateCrossoverInt<TGene> {
+        void SimpleCrossWithMultipleSolutions((int, int) p);
     }
 }

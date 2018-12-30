@@ -1,4 +1,6 @@
-﻿namespace GeneticAlgorithms {
+﻿using System;
+
+namespace GeneticAlgorithms {
     // Abstract class that defines the minimum requisites for each type of Generation.
     public abstract class Generation<TGene> : IQueryableByTerminationCondition {
         protected IChromosomeInt<TGene>[] _chromosomes;
@@ -7,7 +9,10 @@
         public abstract int ParentsLength { get; }
 
         public abstract IChromosomeInt<TGene> GetParent(int index);
+        public abstract void SetParent(int parentIndex, IChromosomeInt<TGene> chromosome);
+
         public abstract IChromosomeInt<TGene> GetOffspring(int index);
+        public abstract void SetOffspring(int offspringIndex, IChromosomeInt<TGene> chromosome);
 
         public Generation(IChromosomeInt<TGene>[] chromosomes) => _chromosomes = chromosomes;
 
@@ -15,6 +20,7 @@
             GenerationCount++;
             OnStartNewGeneration();
         }
+
 
         protected abstract void OnStartNewGeneration();
     }

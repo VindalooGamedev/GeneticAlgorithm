@@ -76,14 +76,14 @@ namespace GeneticAlgorithms {
 
         // Replacement Strategy.
         protected internal void DoSetCleaner(int n) 
-            => _cleaner = new DeleteNLastsCleaner<TGene>(_generation, n);
+            => _cleaner = new DeleteNLastsCleaner<TGene>((FitnessSortedGeneration<TGene>)_generation, n);
 
         // Selection Strategy.
         protected internal void DoSetTournamentSelector(int k) 
-            => _parentSelector = new TournamentSelector<TGene>(_generation, k);
+            => _parentSelector = new TournamentSelector<TGene>((FitnessSortedGeneration<TGene>)_generation, k);
 
         protected internal void DoSetRankSelector() 
-            => _parentSelector = new RankSelector<TGene>(_generation);
+            => _parentSelector = new RankSelector<TGene>((FitnessSortedGeneration<TGene>)_generation);
 
         internal void DoSetRouletteWheelSelector() 
             => _parentSelector = new RouletteWheelSelectorInt<TGene>(_generation);
