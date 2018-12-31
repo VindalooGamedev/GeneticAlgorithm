@@ -1,9 +1,9 @@
 ﻿namespace GeneticAlgorithms {
-    internal interface ISelectionInt {
+    public interface ISelectionInt {
         (int, int)[] GetPairedParentsForEveryOffspring();
     }
 
-    internal interface ISteadyStateSelectionInt {
+    public interface ISteadyStateSelectionInt {
         (int, int) GetPairedParentsOnce();
     }
 }
