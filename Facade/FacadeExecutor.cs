@@ -46,6 +46,11 @@ namespace GeneticAlgorithms {
             return (ISelectionSetted)item;
         }
 
+        public static ISelectionSetted RouletteWheelLFSSelector<TGene>(this IReplacementSetted item) {
+            ((Executor<TGene>)item).DoSetRouletteWheelLFSSelector();
+            return (ISelectionSetted)item;
+        }
+
         public static ICrossoverSetted UniformBreeder<TGene>(this ISelectionSetted item) {
             ((Executor<TGene>)item).DoSetCrossover();
             return (ICrossoverSetted)item;
@@ -85,8 +90,11 @@ namespace GeneticAlgorithms {
         protected internal void DoSetRankSelector() 
             => _parentSelector = new RankSelector<TGene>((FitnessSortedGeneration<TGene>)_generation);
 
-        internal void DoSetRouletteWheelSelector() 
+        internal void DoSetRouletteWheelSelector()
             => _parentSelector = new RouletteWheelSelectorInt<TGene>(_generation);
+
+        internal void DoSetRouletteWheelLFSSelector()
+            => _parentSelector = new RouletteWheelLFSSelectorInt<TGene>(_generation);
 
         // Crossover Strategy.
         protected internal void DoSetCrossover() 
