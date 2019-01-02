@@ -17,6 +17,10 @@ namespace GeneticAlgorithms {
 
         public Generation(IChromosomeInt<TGene>[] chromosomes) => _chromosomes = chromosomes;
 
+        protected void SortByFitness() => Array.Sort(_chromosomes, (a, b) => b.Fitness - a.Fitness);
+        protected void SortByFitness(IChromosomeInt<TGene>[] chromosomeArray) 
+            => Array.Sort(chromosomeArray, (a, b) => b.Fitness - a.Fitness);
+
         public void UpdateGenerationData() {
             GenerationCount++;
             OnStartNewGeneration();

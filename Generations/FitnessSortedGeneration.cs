@@ -20,16 +20,14 @@ namespace GeneticAlgorithms {
 
         public override IChromosomeInt<TGene> GetParent(int index) => _chromosomes[index];
 
-        public override void SetParent(int parentIndex, IChromosomeInt<TGene> chromosome)
-            => _chromosomes[parentIndex] = chromosome;
+        public override void SetParent(int index, IChromosomeInt<TGene> chromosome)
+            => _chromosomes[index] = chromosome;
 
         public override IChromosomeInt<TGene> GetOffspring(int index)
             => _chromosomes[_chromosomes.Length - _offspringSlots + index];
 
-        public override void SetOffspring(int offspringIndex, IChromosomeInt<TGene> chromosome)
-            => _chromosomes[_chromosomes.Length - _offspringSlots + offspringIndex] = chromosome;
-
-        private void SortByFitness() => Array.Sort(_chromosomes, (a, b) => b.Fitness - a.Fitness);
+        public override void SetOffspring(int index, IChromosomeInt<TGene> chromosome)
+            => _chromosomes[_chromosomes.Length - _offspringSlots + index] = chromosome;
 
         // Function to make room for offsprings.
         // This functions assign to removable parents those last n parents with less fitness
@@ -38,9 +36,6 @@ namespace GeneticAlgorithms {
             _offspringSlots = n;
         }
 
-        protected override void OnStartNewGeneration() {
-
-            SortByFitness();
-        }
+        protected override void OnStartNewGeneration() => SortByFitness();
     }
 }

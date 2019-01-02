@@ -27,7 +27,7 @@ namespace GeneticAlgorithms {
         }
 
         public static IReplacementSetted DeleteNLastsCleaner<TGene>(this IGenerationSetted item, int n) {
-            ((Executor<TGene>)item).DoSetCleaner(n);
+            ((Executor<TGene>)item).DoSetDeleteNLastsCleaner(n);
             return (IReplacementSetted)item;
         }
 
@@ -80,7 +80,7 @@ namespace GeneticAlgorithms {
             => _generation = new FitnessSortedGeneration<TGene>(chromosomes);
 
         // Replacement Strategy.
-        protected internal void DoSetCleaner(int n) 
+        protected internal void DoSetDeleteNLastsCleaner(int n) 
             => _cleaner = new DeleteNLastsCleaner<TGene>((FitnessSortedGeneration<TGene>)_generation, n);
 
         // Selection Strategy.
