@@ -4,6 +4,6 @@
     }
 
     internal interface ISteadyStateCrossoverInt<TGene> {
-        void SimpleCrossWithMultipleSolutions((int, int) p);
+        void SimpleCrossWithMultipleSolutions((int, int) parents);
     }
 }
