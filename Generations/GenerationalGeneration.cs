@@ -72,8 +72,12 @@ namespace GeneticAlgorithms {
                 _minimumFitness = int.MaxValue;
                 for (int i = 0; i < ParentsLength; i++) {
                     int observedFitness = GetParent(i).Fitness;
-                    if (observedFitness > _maximumFitness) _maximumFitness = observedFitness;
-                    if (observedFitness < _minimumFitness) _minimumFitness = observedFitness;
+                    if (observedFitness > _maximumFitness) {
+                        _maximumFitness = observedFitness;
+                    }
+                    if (observedFitness < _minimumFitness) {
+                        _minimumFitness = observedFitness;
+                    }
                 }
             }
         }

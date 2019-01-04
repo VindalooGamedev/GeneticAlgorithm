@@ -54,13 +54,13 @@ namespace GeneticAlgorithms {
         public static ICrossoverSetted UniformBreeder<TGene>(this ISelectionSetted item) {
             ((Executor<TGene>)item).DoSetCrossover();
             return (ICrossoverSetted)item;
-        }*/
+        }
 
         public static IMutationSetted UniformMutator<TGene>(this ICrossoverSetted item, int chance, int of, bool elitism) {
             ((Executor<TGene>)item).DoSetMutation(chance, of, elitism);
             return (IMutationSetted)item;
         }
-
+        */
         public static ITerminationConditionSetted SetTerminationCondition<TGene>(this IMutationSetted item, ITerminationConditionInt<TGene> terminationCondition) {
             ((Executor<TGene>)item).DoSetTerminationCondition(terminationCondition);
             return (ITerminationConditionSetted)item;
@@ -100,8 +100,7 @@ namespace GeneticAlgorithms {
         //protected internal void DoSetCrossover()  => _breeder = new UniformBreeder<TGene>(_generation);
 
         // Mutation Strategy.
-        protected internal void DoSetMutation(int chance, int of, bool elitism) 
-            => _mutator = new UniformMutator<TGene>((FitnessSortedGeneration<TGene>)_generation, chance, of, elitism);
+        //protected internal void DoSetMutation(int chance, int of, bool elitism) => _mutator = new UniformMutator<TGene>((FitnessSortedGeneration<TGene>)_generation, chance, of, elitism);
 
         // Termination Condition.
         protected internal void DoSetTerminationCondition(ITerminationConditionInt<TGene> terminationCondition) 

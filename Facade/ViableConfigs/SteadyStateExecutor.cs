@@ -11,6 +11,7 @@
         public int _n;
 
         public SolutionInt<TGene> Run() {
+            ((FitnessSortedGeneration<TGene>)_generation).RemoveLasts(2);
             while (!_terminationCondition.IsMetIn(_generation)) {
                 for (int i = 0; i < _n; i++) {
                     (int, int) parentsSelected = _parentSelector.GetPairedParentsOnce();

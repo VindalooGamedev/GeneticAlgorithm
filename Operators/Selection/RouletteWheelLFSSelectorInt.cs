@@ -12,7 +12,7 @@
         private int _fitnessSum;
 
         public RouletteWheelLFSSelectorInt(Generation<TGene> generation) => _generation = generation;
-        
+
         protected override void PrepareData() {
             int initialSum = 0;
             for (int i = 0; i < _generation.ParentsLength; i++) {
@@ -21,14 +21,16 @@
 
             int mean = initialSum / _generation.ParentsLength;
             int min = mean - (_generation.MaximumFitness - mean);
-            
+
 
             _fitnesses = new int[_generation.ParentsLength];
             for (int i = 0; i < _generation.ParentsLength; i++) {
                 _fitnesses[i] = _generation.GetParent(i).Fitness - min;
-                if (_fitnesses[i] < 0) { _fitnesses[i] = 0; }
+                if (_fitnesses[i] < 0) {
+                    _fitnesses[i] = 0;
+                }
             }
-           
+
             _fitnessSum = 0;
             for (int i = 0; i < _fitnesses.Length; i++) {
                 _fitnessSum += _fitnesses[i];

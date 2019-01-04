@@ -3,22 +3,12 @@
     /// This Mutation Operator mutate each Gene idependently with an immutable chance.
     /// </summary>
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
-    class UniformMutator<TGene> : IMutationInt<TGene> {
-        private FitnessSortedGeneration<TGene> _generation;
-        private bool _elitism;
+    public class UniformMutator<TGene> : IMutationInt<TGene> {
         private int _chance, _of;
 
-        public UniformMutator(FitnessSortedGeneration<TGene> generation, int chance, int of, bool elitism) {
-            _generation = generation;
+        public UniformMutator(int chance, int of) {
             _chance = chance;
             _of = of;
-            _elitism = elitism;
-        }
-
-        public void Mutate() {
-            for (int i = (_elitism) ? 1 : 0; i < _generation.ParentsLength; i++) {
-                Mutate(_generation.GetParent(i));
-            }
         }
 
         public void Mutate(IChromosomeInt<TGene> chromosome) {
