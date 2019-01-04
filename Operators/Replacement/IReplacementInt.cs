@@ -1,8 +1,9 @@
 ﻿namespace GeneticAlgorithms {
-    internal interface IReplacementInt {
+    public interface IReplacementInt {
         void MakeRoom();
     }
-    internal interface ISteadyStateReplacementInt<TGene> {
+
+    public interface ISteadyStateReplacementInt<TGene> {
         void ReplaceComparingWithOffsprings((int, int) parents);
     }
 }

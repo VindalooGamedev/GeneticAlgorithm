@@ -1,5 +1,6 @@
 ﻿namespace GeneticAlgorithms {
-    internal interface IMutationInt {
+    public interface IMutationInt<TGene> {
         void Mutate();
+        void Mutate(IChromosomeInt<TGene> chromosome);
     }
 }

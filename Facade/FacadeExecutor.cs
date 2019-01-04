@@ -1,7 +1,6 @@
 ﻿using System;
 
 namespace GeneticAlgorithms {
-
     // This interface is used to group all states in one whole.
     // If some types in the future can have subsets of this group 
     internal interface IGrouped<TGene> :
@@ -51,10 +50,11 @@ namespace GeneticAlgorithms {
             return (ISelectionSetted)item;
         }
 
+        /*
         public static ICrossoverSetted UniformBreeder<TGene>(this ISelectionSetted item) {
             ((Executor<TGene>)item).DoSetCrossover();
             return (ICrossoverSetted)item;
-        }
+        }*/
 
         public static IMutationSetted UniformMutator<TGene>(this ICrossoverSetted item, int chance, int of, bool elitism) {
             ((Executor<TGene>)item).DoSetMutation(chance, of, elitism);
@@ -97,8 +97,7 @@ namespace GeneticAlgorithms {
             => _parentSelector = new RouletteWheelLFSSelectorInt<TGene>(_generation);
 
         // Crossover Strategy.
-        protected internal void DoSetCrossover() 
-            => _breeder = new UniformBreeder<TGene>(_generation);
+        //protected internal void DoSetCrossover()  => _breeder = new UniformBreeder<TGene>(_generation);
 
         // Mutation Strategy.
         protected internal void DoSetMutation(int chance, int of, bool elitism) 

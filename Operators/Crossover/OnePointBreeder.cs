@@ -1,13 +1,10 @@
-﻿using System;
-
-namespace GeneticAlgorithms {
-
-    class OnePointBreeder<TGene> : ICrossoverInt, ISteadyStateCrossoverInt<TGene> {
+﻿namespace GeneticAlgorithms {
+    class OnePointBreeder<TGene> : ICrossoverInt<TGene>, ISteadyStateCrossoverInt<TGene> {
         private Generation<TGene> _generation;
 
         public OnePointBreeder(Generation<TGene> generation) => _generation = generation;
 
-        public void MultipleCross((int, int)[] parents) {
+        public void MultipleCross((int, int)[] parents, IMutationInt<TGene> mutator) {
             IChromosomeInt<TGene> parent1,
                                   parent2,
                                   offspring;
@@ -26,10 +23,12 @@ namespace GeneticAlgorithms {
                 for (int j = crossPoint; j < offspring.Length; j++) {
                     offspring[j] = parent2[j];
                 }
+
+                mutator.Mutate(offspring);
             }
         }
 
-        public void SimpleCrossWithMultipleSolutions((int, int) parents) {
+        public void SimpleCrossWithMultipleSolutions((int, int) parents, IMutationInt<TGene> mutator) {
             IChromosomeInt<TGene> parent1 = _generation.GetParent(parents.Item1);
             IChromosomeInt<TGene> parent2 = _generation.GetParent(parents.Item2);
             IChromosomeInt<TGene> offspring1 = _generation.GetOffspring(0);
@@ -46,6 +45,9 @@ namespace GeneticAlgorithms {
                 offspring1[j] = parent2[j];
                 offspring2[j] = parent1[j];
             }
+
+            mutator.Mutate(offspring1);
+            mutator.Mutate(offspring2);
         }
     }
 }

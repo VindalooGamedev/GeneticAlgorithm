@@ -4,13 +4,12 @@
     /// selecting one of the parents gene at 50% of chance each.
     /// </summary>
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
-    class UniformBreeder<TGene> : ICrossoverInt, ISteadyStateCrossoverInt<TGene> {
+    class UniformBreeder<TGene> : ICrossoverInt<TGene>, ISteadyStateCrossoverInt<TGene> {
         private Generation<TGene> _generation;
 
         public UniformBreeder(Generation<TGene> generation) => _generation = generation;
 
-        public void MultipleCross((int, int)[] parents) {
-
+        public void MultipleCross((int, int)[] parents, IMutationInt<TGene> mutator) {
             IChromosomeInt<TGene> parent1,
                                   parent2,
                                   offspring;
@@ -23,10 +22,12 @@
                 for (int j = 0; j < offspring.Length; j++) {
                     offspring[j] = (Randomizer.Next(2) == 0) ? parent1[j] : parent2[j];
                 }
+
+                mutator.Mutate(offspring);
             }
         }
 
-        public void SimpleCrossWithMultipleSolutions((int, int) parents) {
+        public void SimpleCrossWithMultipleSolutions((int, int) parents, IMutationInt<TGene> mutator) {
             IChromosomeInt<TGene> parent1 = _generation.GetParent(parents.Item1);
             IChromosomeInt<TGene> parent2 = _generation.GetParent(parents.Item2);
             IChromosomeInt<TGene> offspring1 = _generation.GetOffspring(0);
@@ -42,6 +43,9 @@
                     offspring2[j] = parent1[j];
                 }
             }
+
+            mutator.Mutate(offspring1);
+            mutator.Mutate(offspring2);
         }
     }
 }

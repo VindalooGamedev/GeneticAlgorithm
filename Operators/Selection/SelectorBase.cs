@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GeneticAlgorithms {
+﻿namespace GeneticAlgorithms {
     public abstract class SelectorBase<TGeneration, TGene> : ISelectionInt, ISteadyStateSelectionInt
         where TGeneration : Generation<TGene> {
         protected TGeneration _generation;
@@ -20,6 +16,7 @@ namespace GeneticAlgorithms {
         }
 
         protected abstract void PrepareData();
+
         protected abstract int GetFirstParent();
         protected abstract int GetSecondParent(int item1);
 

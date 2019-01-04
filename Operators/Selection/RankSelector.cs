@@ -6,7 +6,8 @@
     /// </summary>
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
     public partial class RankSelector<TGene> : SelectorBase<FitnessSortedGeneration<TGene>, TGene> {
-        private int _n, _nsum;
+        private int _n, 
+                    _nsum;
 
         public RankSelector(FitnessSortedGeneration<TGene> generation) => _generation = generation;
 

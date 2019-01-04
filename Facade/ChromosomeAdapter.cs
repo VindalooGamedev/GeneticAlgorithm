@@ -1,6 +1,6 @@
 ﻿using System;
-namespace GeneticAlgorithms {
 
+namespace GeneticAlgorithms {
     /// <summary>
     /// This class works as an adapter of the real chromosome to cover some features.
     ///  - It implement lazy pattern of the value of Fitness to avoid heavy calcs.
