@@ -1,6 +1,6 @@
 ﻿namespace GeneticAlgorithms {
     public abstract class SelectorBase<TGeneration, TGene> : ISelectionInt, ISteadyStateSelectionInt
-        where TGeneration : Generation<TGene> {
+        where TGeneration : GenerationBase<TGene> {
         protected TGeneration _generation;
 
         public (int, int)[] GetPairedParentsForEveryOffspring() {

@@ -5,9 +5,9 @@
     /// </summary>
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
     public class UniformBreeder<TGene> : ICrossoverInt<TGene>, ISteadyStateCrossoverInt<TGene> {
-        private Generation<TGene> _generation;
+        private GenerationBase<TGene> _generation;
 
-        public UniformBreeder(Generation<TGene> generation) => _generation = generation;
+        public UniformBreeder(GenerationBase<TGene> generation) => _generation = generation;
 
         public void MultipleCross((int, int)[] parents, IMutationInt<TGene> mutator) {
             IChromosomeInt<TGene> parent1,

@@ -5,10 +5,10 @@
     /// the higher the fitness the higher the chance to be selected to be a parent.
     /// </summary>
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
-    public partial class RouletteWheelSelectorInt<TGene> : SelectorBase<Generation<TGene>, TGene> {
+    public partial class RouletteWheelSelectorInt<TGene> : SelectorBase<GenerationBase<TGene>, TGene> {
         private int _fitnessSum;
 
-        public RouletteWheelSelectorInt(Generation<TGene> generation) => _generation = generation;
+        public RouletteWheelSelectorInt(GenerationBase<TGene> generation) => _generation = generation;
         
         protected override void PrepareData() {
             _fitnessSum = 0;

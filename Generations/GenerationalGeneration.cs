@@ -1,7 +1,7 @@
 ﻿using System;
 
 namespace GeneticAlgorithms {
-    public class GenerationalGeneration<TGene> : Generation<TGene> {
+    public class GenerationalGeneration<TGene> : GenerationBase<TGene> {
         private bool _sortedByFitness;
         private bool _generationalPure;
 

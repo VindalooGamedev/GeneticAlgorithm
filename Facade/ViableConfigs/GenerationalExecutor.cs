@@ -1,6 +1,6 @@
 ﻿namespace GeneticAlgorithms {
     public partial class GenerationalExecutor<TGene> {
-        public Generation<TGene> _generation;
+        public GenerationBase<TGene> _generation;
         public ITerminationConditionInt<TGene> _terminationCondition;
         public ISelectionInt _parentSelector;
         public ICrossoverInt<TGene> _breeder;

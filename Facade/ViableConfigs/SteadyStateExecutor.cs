@@ -2,7 +2,7 @@
     // TODO: Facade Support.
     // TODO: Test if it works.
     public partial class SteadyStateExecutor<TGene> {
-        public Generation<TGene> _generation;
+        public FitnessSortedGeneration<TGene> _generation;
         public ITerminationConditionInt<TGene> _terminationCondition;
         public ISteadyStateReplacementInt<TGene> _coordinator;
         public ISteadyStateSelectionInt _parentSelector;
@@ -11,7 +11,7 @@
         public int _n;
 
         public SolutionInt<TGene> Run() {
-            ((FitnessSortedGeneration<TGene>)_generation).RemoveLasts(2);
+            _generation.RemoveLasts(2);
             while (!_terminationCondition.IsMetIn(_generation)) {
                 for (int i = 0; i < _n; i++) {
                     (int, int) parentsSelected = _parentSelector.GetPairedParentsOnce();

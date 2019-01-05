@@ -1,8 +1,8 @@
 ﻿namespace GeneticAlgorithms {
     class OnePointBreeder<TGene> : ICrossoverInt<TGene>, ISteadyStateCrossoverInt<TGene> {
-        private Generation<TGene> _generation;
+        private GenerationBase<TGene> _generation;
 
-        public OnePointBreeder(Generation<TGene> generation) => _generation = generation;
+        public OnePointBreeder(GenerationBase<TGene> generation) => _generation = generation;
 
         public void MultipleCross((int, int)[] parents, IMutationInt<TGene> mutator) {
             IChromosomeInt<TGene> parent1,

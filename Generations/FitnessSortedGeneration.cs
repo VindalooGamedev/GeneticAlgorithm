@@ -5,7 +5,7 @@ namespace GeneticAlgorithms {
     /// This class adds a feature of chromosomes sorted by Fitness desc.
     /// </summary>
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
-    public class FitnessSortedGeneration<TGene> : Generation<TGene> {
+    public class FitnessSortedGeneration<TGene> : GenerationBase<TGene> {
         private int _offspringSlots;
 
         public override int OffspringLength => _offspringSlots;

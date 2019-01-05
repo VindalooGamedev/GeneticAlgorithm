@@ -1,34 +1,49 @@
 ﻿using System;
-
 namespace GeneticAlgorithms {
-    // Abstract class that defines the minimum requisites for each type of Generation.
-    public abstract class Generation<TGene> : IQueryableByTerminationCondition {
-        protected IChromosomeInt<TGene>[] _chromosomes;
+    public class Generation<TGene> : GenerationBase<TGene> {
+        [Flags]
+        public enum Requirements : short {
+            None = 0,
+            FitnessSorted = 1,
+            VirtuallyUnsorted = 2,
+            ChromosomeVirtuallySplitted = 4,
+        };
 
-        public int GenerationCount { get; private set; } = 0;
+        private int _offspringLength;
+        public override int OffspringLength => _offspringLength;
 
-        public abstract int MinimumFitness { get; }
-        public abstract int MaximumFitness { get; }
+        private int _parentsLength;
+        public override int ParentsLength => _parentsLength;
 
-        public abstract int ParentsLength { get; }
-        public abstract IChromosomeInt<TGene> GetParent(int index);
-        public abstract void SetParent(int parentIndex, IChromosomeInt<TGene> chromosome);
+        private int _minimumFitness;
+        public override int MinimumFitness => _minimumFitness;
 
-        public abstract int OffspringLength { get; }
-        public abstract IChromosomeInt<TGene> GetOffspring(int index);
-        public abstract void SetOffspring(int offspringIndex, IChromosomeInt<TGene> chromosome);
+        private int _maximumFitness;
+        public override int MaximumFitness => _maximumFitness;
 
-        public Generation(IChromosomeInt<TGene>[] chromosomes) => _chromosomes = chromosomes;
+        public Generation(IChromosomeInt<TGene>[] chromosomes, Requirements requirements) 
+            : base(chromosomes) {
 
-        protected void SortByFitness() => Array.Sort(_chromosomes, (a, b) => b.Fitness - a.Fitness);
-        protected void SortByFitness(IChromosomeInt<TGene>[] chromosomeArray) 
-            => Array.Sort(chromosomeArray, (a, b) => b.Fitness - a.Fitness);
-
-        public void UpdateGenerationData() {
-            GenerationCount++;
-            OnStartNewGeneration();
         }
 
-        protected abstract void OnStartNewGeneration();
+        public override IChromosomeInt<TGene> GetOffspring(int index) {
+            throw new System.NotImplementedException();
+        }
+
+        public override IChromosomeInt<TGene> GetParent(int index) {
+            throw new System.NotImplementedException();
+        }
+
+        public override void SetOffspring(int offspringIndex, IChromosomeInt<TGene> chromosome) {
+            throw new System.NotImplementedException();
+        }
+
+        public override void SetParent(int parentIndex, IChromosomeInt<TGene> chromosome) {
+            throw new System.NotImplementedException();
+        }
+
+        protected override void OnStartNewGeneration() {
+            throw new System.NotImplementedException();
+        }
     }
 }

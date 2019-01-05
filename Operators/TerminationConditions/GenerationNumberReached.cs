@@ -9,6 +9,6 @@
 
         public GenerationNumberReachedInt(int max) => _maxGeneration = max;
 
-        public bool IsMetIn (Generation<TGene> generation) => generation.GenerationCount >= _maxGeneration;
+        public bool IsMetIn (GenerationBase<TGene> generation) => generation.GenerationCount >= _maxGeneration;
     }
 }
