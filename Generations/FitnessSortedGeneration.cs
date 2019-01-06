@@ -11,8 +11,8 @@ namespace GeneticAlgorithms {
         public override int OffspringLength => _offspringSlots;
         public override int ParentsLength => _chromosomes.Length - _offspringSlots;
 
-        public override int MinimumFitness => _chromosomes[ParentsLength - 1].Fitness;
-        public override int MaximumFitness => _chromosomes[0].Fitness;
+        public override int MinFit => _chromosomes[ParentsLength - 1].Fitness;
+        public override int MaxFit => _chromosomes[0].Fitness;
 
         // Constructor
         public FitnessSortedGeneration(IChromosomeInt<TGene>[] chromosomes) : base(chromosomes)

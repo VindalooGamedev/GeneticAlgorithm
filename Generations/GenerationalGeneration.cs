@@ -12,21 +12,21 @@ namespace GeneticAlgorithms {
         public override int ParentsLength => _parentsLength;
 
         private int _minimumFitness;
-        public override int MinimumFitness => _minimumFitness;
+        public override int MinFit => _minimumFitness;
 
         private int _maximumFitness;
-        public override int MaximumFitness => _maximumFitness;
+        public override int MaxFit => _maximumFitness;
 
         // Only parents will be sorted by fitness
         public GenerationalGeneration(
             IChromosomeInt<TGene>[] chromosomes,
             int parentsAmount,
-            bool sortedByFitness,
+            bool FitSorted,
             bool generationalPure)
             : base(chromosomes) {
             _parentsLength = parentsAmount;
             _offspringLength = chromosomes.Length - parentsAmount;
-            _sortedByFitness = sortedByFitness;
+            _sortedByFitness = FitSorted;
             _generationalPure = generationalPure;
         }
 

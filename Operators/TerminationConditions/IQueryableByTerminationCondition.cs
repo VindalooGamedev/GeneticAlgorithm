@@ -1,5 +1,5 @@
 ﻿namespace GeneticAlgorithms {
     public interface IQueryableByTerminationCondition {
-        int GenerationCount { get; }
+        int GenCount { get; }
     }
 }

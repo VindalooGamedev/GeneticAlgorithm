@@ -20,7 +20,7 @@
             }
 
             int mean = initialSum / _generation.ParentsLength;
-            int min = mean - (_generation.MaximumFitness - mean);
+            int min = mean - (_generation.MaxFit - mean);
 
 
             _fitnesses = new int[_generation.ParentsLength];

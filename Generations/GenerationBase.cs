@@ -5,10 +5,10 @@ namespace GeneticAlgorithms {
     public abstract class GenerationBase<TGene> : IQueryableByTerminationCondition {
         protected IChromosomeInt<TGene>[] _chromosomes;
 
-        public int GenerationCount { get; private set; } = 0;
+        public int GenCount { get; private set; } = 0;
 
-        public abstract int MinimumFitness { get; }
-        public abstract int MaximumFitness { get; }
+        public abstract int MinFit { get; }
+        public abstract int MaxFit { get; }
 
         public abstract int ParentsLength { get; }
         public abstract IChromosomeInt<TGene> GetParent(int index);
@@ -25,7 +25,7 @@ namespace GeneticAlgorithms {
             => Array.Sort(chromosomeArray, (a, b) => b.Fitness - a.Fitness);
 
         public void UpdateGenerationData() {
-            GenerationCount++;
+            GenCount++;
             OnStartNewGeneration();
         }
 
