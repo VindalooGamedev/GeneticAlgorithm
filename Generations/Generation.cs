@@ -1,24 +1,35 @@
 ﻿using System;
 
 namespace GeneticAlgorithms {
-    public class Generation<TGene> : GenerationBase<TGene> {
-        private bool _isUnsorted = true;
+    public class Generation<TGene> {
+        private IChromosomeInt<TGene>[] _chromosomes;
+
+        private bool IsUnsorted { get; set; } = true;
         public bool FitSorted { get; set; }
+        public int OffspringLength { get; private set; }
+        public int ParentsLength { get; private set; }
+        public int MinFit { get; private set; }
+        public int MaxFit { get; private set; }
+        public int GenCount { get; private set; } = 0;
 
-        private int _offspringLength;
-        public override int OffspringLength => _offspringLength;
+        public IChromosomeInt<TGene> GetParent(int index) 
+            => _chromosomes[index];
 
-        private int _parentsLength;
-        public override int ParentsLength => _parentsLength;
+        public IChromosomeInt<TGene> GetOffspring(int index)
+            => _chromosomes[OffspringAdress(index)];
 
-        private int _minFit;
-        public override int MinFit => _minFit;
+        private int OffspringAdress(int index)
+            => _chromosomes.Length - OffspringLength + index;
 
-        private int _maxFit;
-        public override int MaxFit => _maxFit;
-
-        public Generation(IChromosomeInt<TGene>[] chromosomes) : base(chromosomes)
+        public Generation(IChromosomeInt<TGene>[] chromosomes)
             => _chromosomes = chromosomes;
+
+        public void UpdateGenerationData() {
+            GenCount++;
+            if (FitSorted) {
+                SortByFitness();
+            }
+        }
 
         public void Switch(int parentId, int offspringId) {
             IChromosomeInt<TGene> auxParent = GetParent(parentId);
@@ -26,67 +37,36 @@ namespace GeneticAlgorithms {
             _chromosomes[OffspringAdress(offspringId)] = auxParent;
         }
 
-        public void FullSwitch() {
-            IChromosomeInt<TGene>[] auxArray;
-            if (ParentsLength <= OffspringLength) {
-                auxArray = new IChromosomeInt<TGene>[ParentsLength];
+        public void FullSwitch() 
+            => SwitchChunk((ParentsLength <= OffspringLength) ? ParentsLength : OffspringLength);
 
-                Array.Copy(_chromosomes, 0, auxArray, 0, ParentsLength);
-                Array.Copy(_chromosomes, OffspringAdress(0), _chromosomes, 0, ParentsLength);
-                Array.Copy(auxArray, 0, _chromosomes, OffspringAdress(0), ParentsLength);
-                return;
-            }
-            else {
-                auxArray = new IChromosomeInt<TGene>[OffspringLength];
-                int chunkOffset = ParentsLength - OffspringLength;
+        public void SwitchChunk(int length) {
+            IChromosomeInt<TGene>[] auxArray = new IChromosomeInt<TGene>[length];
+            int chunkOffset = ParentsLength - length;
 
-                Array.Copy(_chromosomes, chunkOffset, auxArray, 0, OffspringLength);
-                Array.Copy(_chromosomes, OffspringAdress(0), _chromosomes, chunkOffset, OffspringLength);
-                Array.Copy(auxArray, 0, _chromosomes, OffspringAdress(0), OffspringLength);
-                return;
-            }
+            Array.Copy(_chromosomes, chunkOffset, auxArray, 0, length);
+            Array.Copy(_chromosomes, OffspringAdress(0), _chromosomes, chunkOffset, length);
+            Array.Copy(auxArray, 0, _chromosomes, OffspringAdress(0), length);
         }
 
-        public void SortByFitness() => SortByFitness(_chromosomes);
+        public void SortByFitness() 
+            => SortByFitness(_chromosomes);
 
-        public void SortParentByFitness() {
+        protected void SortByFitness(IChromosomeInt<TGene>[] chromosomeArray)
+            => Array.Sort(chromosomeArray, (a, b) => b.Fitness - a.Fitness);
+
+        public void SortParentByFitness() 
+            => SortByFitness(0, ParentsLength);
+
+        public void SortOffspringsByFitness()
+            => SortByFitness(OffspringAdress(0), OffspringLength);
+
+        public void SortByFitness(int origin, int length) {
             IChromosomeInt<TGene>[] auxArray = new IChromosomeInt<TGene>[ParentsLength];
 
-            // Copy parents to aux then sort and copy back.
-            Array.Copy(_chromosomes, 0, auxArray, 0, ParentsLength);
+            Array.Copy(_chromosomes, origin, auxArray, 0, length);
             SortByFitness(auxArray);
-            Array.Copy(auxArray, 0, _chromosomes, 0, ParentsLength);
+            Array.Copy(auxArray, 0, _chromosomes, origin, length);
         }
-
-        public void SortOffspringsByFitness() {
-            IChromosomeInt<TGene>[] auxArray = new IChromosomeInt<TGene>[ParentsLength];
-
-            // Copy parents to aux then sort and copy back.
-            Array.Copy(_chromosomes, OffspringAdress(0), auxArray, 0, OffspringLength);
-            SortByFitness(auxArray);
-            Array.Copy(auxArray, 0, _chromosomes, OffspringAdress(0), OffspringLength);
-        }
-
-        public override IChromosomeInt<TGene> GetParent(int index)
-            => _chromosomes[index];
-
-        public override IChromosomeInt<TGene> GetOffspring(int index)
-            => _chromosomes[OffspringAdress(index)];
-
-        private int OffspringAdress(int index)
-            => _chromosomes.Length - OffspringLength + index;
-
-        protected override void OnStartNewGeneration() {
-            if (FitSorted) {
-                SortByFitness();
-            }
-            throw new NotImplementedException();
-        }
-
-        public override void SetOffspring(int offspringIndex, IChromosomeInt<TGene> chromosome)
-            => throw new System.NotImplementedException();
-
-        public override void SetParent(int parentIndex, IChromosomeInt<TGene> chromosome)
-            => throw new System.NotImplementedException();
     }
 }
