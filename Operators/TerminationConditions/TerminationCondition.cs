@@ -1,5 +1,5 @@
 ﻿namespace GeneticAlgorithms {
-    public interface ITerminationConditionInt<TGene> {
-        bool IsMetIn(GenerationBase<TGene> generation);
+    public interface ITermCondInt<TGene> {
+        bool IsMetIn(GenBase<TGene> gen);
     }
 }

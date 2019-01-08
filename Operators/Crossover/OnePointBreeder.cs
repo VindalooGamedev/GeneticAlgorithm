@@ -1,53 +1,53 @@
 ﻿namespace GeneticAlgorithms {
-    class OnePointBreeder<TGene> : ICrossoverInt<TGene>, ISteadyStateCrossoverInt<TGene> {
-        private GenerationBase<TGene> _generation;
+    class OnePointBreeder<TGene> : ICrossInt<TGene>, ISteaStaCrossInt<TGene> {
+        private GenBase<TGene> _gen;
 
-        public OnePointBreeder(GenerationBase<TGene> generation) => _generation = generation;
+        public OnePointBreeder(GenBase<TGene> gen) => _gen = gen;
 
-        public void MultipleCross((int, int)[] parents, IMutationInt<TGene> mutator) {
-            IChromosomeInt<TGene> parent1,
-                                  parent2,
-                                  offspring;
+        public void MultipleCross((int, int)[] pars, IMutInt<TGene> mutator) {
+            IChromoInt<TGene> par1,
+                              par2,
+                              off;
 
-            for (int i = 0; i < _generation.OffspringLength; i++) {
-                parent1 = _generation.GetParent(parents[i].Item1);
-                parent2 = _generation.GetParent(parents[i].Item2);
-                offspring = _generation.GetOffspring(i);
+            for (int i = 0; i < _gen.OffsLength; i++) {
+                par1 = _gen.GetPar(pars[i].Item1);
+                par2 = _gen.GetPar(pars[i].Item2);
+                off = _gen.GetOff(i);
 
-                int crossPoint = Randomizer.Next(offspring.Length - 1);
+                int crossPoint = Randomizer.Next(off.Length - 1);
 
                 for (int j = 0; j <= crossPoint; j++) {
-                    offspring[j] = parent1[j];
+                    off[j] = par1[j];
                 }
 
-                for (int j = crossPoint; j < offspring.Length; j++) {
-                    offspring[j] = parent2[j];
+                for (int j = crossPoint; j < off.Length; j++) {
+                    off[j] = par2[j];
                 }
 
-                mutator.Mutate(offspring);
+                mutator.Mutate(off);
             }
         }
 
-        public void SimpleCrossWithMultipleSolutions((int, int) parents, IMutationInt<TGene> mutator) {
-            IChromosomeInt<TGene> parent1 = _generation.GetParent(parents.Item1);
-            IChromosomeInt<TGene> parent2 = _generation.GetParent(parents.Item2);
-            IChromosomeInt<TGene> offspring1 = _generation.GetOffspring(0);
-            IChromosomeInt<TGene> offspring2 = _generation.GetOffspring(1);
+        public void SimpleCrossWithMultipleSolutions((int, int) parents, IMutInt<TGene> mutator) {
+            IChromoInt<TGene> par1 = _gen.GetPar(parents.Item1);
+            IChromoInt<TGene> par2 = _gen.GetPar(parents.Item2);
+            IChromoInt<TGene> off1 = _gen.GetOff(0);
+            IChromoInt<TGene> off2 = _gen.GetOff(1);
 
-            int crossPoint = Randomizer.Next(offspring1.Length - 1);
+            int crossPoint = Randomizer.Next(off1.Length - 1);
 
             for (int j = 0; j <= crossPoint; j++) {
-                offspring1[j] = parent1[j];
-                offspring2[j] = parent2[j];
+                off1[j] = par1[j];
+                off2[j] = par2[j];
             }
 
-            for (int j = crossPoint; j < offspring1.Length; j++) {
-                offspring1[j] = parent2[j];
-                offspring2[j] = parent1[j];
+            for (int j = crossPoint; j < off1.Length; j++) {
+                off1[j] = par2[j];
+                off2[j] = par1[j];
             }
 
-            mutator.Mutate(offspring1);
-            mutator.Mutate(offspring2);
+            mutator.Mutate(off1);
+            mutator.Mutate(off2);
         }
     }
 }

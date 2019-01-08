@@ -20,7 +20,7 @@ namespace GeneticAlgorithms {
 
     // All actions viable by the interface sorted by interface used as "this parameter"
     public static class SomeFluentExtensions {
-        public static IGenerationSetted FitnessSortedGeneration<TGene>(this IInitialClass item, IChromosomeInt<TGene>[] chromosomes) {
+        public static IGenerationSetted FitnessSortedGeneration<TGene>(this IInitialClass item, IChromoInt<TGene>[] chromosomes) {
             ((Executor<TGene>)item).DoSetGeneration(chromosomes);
             return (IGenerationSetted)item;
         }
@@ -61,7 +61,7 @@ namespace GeneticAlgorithms {
             return (IMutationSetted)item;
         }
         */
-        public static ITerminationConditionSetted SetTerminationCondition<TGene>(this IMutationSetted item, ITerminationConditionInt<TGene> terminationCondition) {
+        public static ITerminationConditionSetted SetTerminationCondition<TGene>(this IMutationSetted item, ITermCondInt<TGene> terminationCondition) {
             ((Executor<TGene>)item).DoSetTerminationCondition(terminationCondition);
             return (ITerminationConditionSetted)item;
         }
@@ -76,25 +76,25 @@ namespace GeneticAlgorithms {
         public static IInitialClass Create() => new Executor<TGene>();
 
         // Generation Type.
-        protected internal void DoSetGeneration(IChromosomeInt<TGene>[] chromosomes) 
-            => _generation = new FitnessSortedGeneration<TGene>(chromosomes);
+        protected internal void DoSetGeneration(IChromoInt<TGene>[] chromosomes) 
+            => _gen = new FitSortGen<TGene>(chromosomes);
 
         // Replacement Strategy.
         protected internal void DoSetDeleteNLastsCleaner(int n) 
-            => _cleaner = new DeleteNLastsCleaner<TGene>((FitnessSortedGeneration<TGene>)_generation, n);
+            => _cleaner = new DeleteNLastsCleaner<TGene>((FitSortGen<TGene>)_gen, n);
 
         // Selection Strategy.
         protected internal void DoSetTournamentSelector(int k) 
-            => _parentSelector = new TournamentSelector<TGene>((FitnessSortedGeneration<TGene>)_generation, k);
+            => _parentSelector = new TournamentSel<TGene>((FitSortGen<TGene>)_gen, k);
 
         protected internal void DoSetRankSelector() 
-            => _parentSelector = new RankSelector<TGene>((FitnessSortedGeneration<TGene>)_generation);
+            => _parentSelector = new RankSel<TGene>((FitSortGen<TGene>)_gen);
 
         internal void DoSetRouletteWheelSelector()
-            => _parentSelector = new RouletteWheelSelectorInt<TGene>(_generation);
+            => _parentSelector = new RouletteWheelSelInt<TGene>(_gen);
 
         internal void DoSetRouletteWheelLFSSelector()
-            => _parentSelector = new RouletteWheelLFSSelectorInt<TGene>(_generation);
+            => _parentSelector = new RouletteWheelLFSSelInt<TGene>(_gen);
 
         // Crossover Strategy.
         //protected internal void DoSetCrossover()  => _breeder = new UniformBreeder<TGene>(_generation);
@@ -103,8 +103,8 @@ namespace GeneticAlgorithms {
         //protected internal void DoSetMutation(int chance, int of, bool elitism) => _mutator = new UniformMutator<TGene>((FitnessSortedGeneration<TGene>)_generation, chance, of, elitism);
 
         // Termination Condition.
-        protected internal void DoSetTerminationCondition(ITerminationConditionInt<TGene> terminationCondition) 
-            => _terminationCondition = terminationCondition;
+        protected internal void DoSetTerminationCondition(ITermCondInt<TGene> terminationCondition) 
+            => _termCond = terminationCondition;
 
         // Last step that reveals the interface to be used.
         internal virtual IFinalClass<TGene> DoDone() => this;

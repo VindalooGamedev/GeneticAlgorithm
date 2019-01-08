@@ -4,48 +4,48 @@
     /// selecting one of the parents gene at 50% of chance each.
     /// </summary>
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
-    public class UniformBreeder<TGene> : ICrossoverInt<TGene>, ISteadyStateCrossoverInt<TGene> {
-        private GenerationBase<TGene> _generation;
+    public class UniformBreeder<TGene> : ICrossInt<TGene>, ISteaStaCrossInt<TGene> {
+        private GenBase<TGene> _gen;
 
-        public UniformBreeder(GenerationBase<TGene> generation) => _generation = generation;
+        public UniformBreeder(GenBase<TGene> gen) => _gen = gen;
 
-        public void MultipleCross((int, int)[] parents, IMutationInt<TGene> mutator) {
-            IChromosomeInt<TGene> parent1,
-                                  parent2,
-                                  offspring;
+        public void MultipleCross((int, int)[] pars, IMutInt<TGene> mutator) {
+            IChromoInt<TGene> par1,
+                              par2,
+                              off;
 
-            for (int i = 0; i < _generation.OffspringLength; i++) {
-                parent1 = _generation.GetParent(parents[i].Item1);
-                parent2 = _generation.GetParent(parents[i].Item2);
-                offspring = _generation.GetOffspring(i);
+            for (int i = 0; i < _gen.OffsLength; i++) {
+                par1 = _gen.GetPar(pars[i].Item1);
+                par2 = _gen.GetPar(pars[i].Item2);
+                off = _gen.GetOff(i);
 
-                for (int j = 0; j < offspring.Length; j++) {
-                    offspring[j] = (Randomizer.Next(2) == 0) ? parent1[j] : parent2[j];
+                for (int j = 0; j < off.Length; j++) {
+                    off[j] = (Randomizer.Next(2) == 0) ? par1[j] : par2[j];
                 }
 
-                mutator.Mutate(offspring);
+                mutator.Mutate(off);
             }
         }
 
-        public void SimpleCrossWithMultipleSolutions((int, int) parents, IMutationInt<TGene> mutator) {
-            IChromosomeInt<TGene> parent1 = _generation.GetParent(parents.Item1);
-            IChromosomeInt<TGene> parent2 = _generation.GetParent(parents.Item2);
-            IChromosomeInt<TGene> offspring1 = _generation.GetOffspring(0);
-            IChromosomeInt<TGene> offspring2 = _generation.GetOffspring(1);
+        public void SimpleCrossWithMultipleSolutions((int, int) pars, IMutInt<TGene> mutator) {
+            IChromoInt<TGene> par1 = _gen.GetPar(pars.Item1);
+            IChromoInt<TGene> par2 = _gen.GetPar(pars.Item2);
+            IChromoInt<TGene> off1 = _gen.GetOff(0);
+            IChromoInt<TGene> off2 = _gen.GetOff(1);
 
-            for (int j = 0; j < offspring1.Length; j++) {
+            for (int j = 0; j < off1.Length; j++) {
                 if (Randomizer.Next(2) == 0) {
-                    offspring1[j] = parent1[j];
-                    offspring2[j] = parent2[j];
+                    off1[j] = par1[j];
+                    off2[j] = par2[j];
                 }
                 else {
-                    offspring1[j] = parent2[j];
-                    offspring2[j] = parent1[j];
+                    off1[j] = par2[j];
+                    off2[j] = par1[j];
                 }
             }
 
-            mutator.Mutate(offspring1);
-            mutator.Mutate(offspring2);
+            mutator.Mutate(off1);
+            mutator.Mutate(off2);
         }
     }
 }
