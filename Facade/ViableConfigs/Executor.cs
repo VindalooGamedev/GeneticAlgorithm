@@ -1,6 +1,6 @@
 ﻿namespace GeneticAlgorithms {
     public partial class Executor<TGene> {
-        public GenBase<TGene> _gen;
+        public Gen<TGene> _gen;
         public ITermCondInt<TGene> _termCond;
         public IReplInt _cleaner;
         public ISelInt _parentSelector;

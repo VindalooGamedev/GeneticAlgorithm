@@ -5,10 +5,10 @@
     /// the higher the fitness the higher the chance to be selected to be a parent.
     /// </summary>
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
-    public partial class RouletteWheelSelInt<TGene> : SelBase<GenBase<TGene>, TGene> {
+    public partial class RouletteWheelSelInt<TGene> : SelBase<TGene> {
         private int _fitsSum;
 
-        public RouletteWheelSelInt(GenBase<TGene> gen) => _gen = gen;
+        public RouletteWheelSelInt(Gen<TGene> gen) => _gen = gen;
         
         protected override void PrepareData() {
             _fitsSum = 0;
@@ -27,12 +27,12 @@
             return chromo;
         }
 
-        protected override int GetSecondPar(int otherParent) {
-            int pos = Randomizer.Next(0, _fitsSum - (_gen.GetPar(otherParent).Fit));
+        protected override int GetSecondPar(int otherPar) {
+            int pos = Randomizer.Next(0, _fitsSum - (_gen.GetPar(otherPar).Fit));
             int chromo = -1;
             do {
                 chromo++;
-                if (chromo == otherParent) {
+                if (chromo == otherPar) {
                     chromo++;
                 }
                 pos -= _gen.GetPar(chromo).Fit;

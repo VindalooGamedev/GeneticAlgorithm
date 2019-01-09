@@ -2,7 +2,7 @@
     // TODO: Facade Support.
     // TODO: Test if it works.
     public partial class SteStaExecutor<TGene> {
-        public FitSortGen<TGene> _gen;
+        public Gen<TGene> _gen;
         public ITermCondInt<TGene> _termCond;
         public ISteStaReplInt<TGene> _coordinator;
         public ISteStaSelInt _parentSelector;
@@ -11,7 +11,7 @@
         public int _n;
 
         public SolutionInt<TGene> Run() {
-            _gen.RemoveLasts(2);
+            _gen.OffsLength = 2;
             while (!_termCond.IsMetIn(_gen)) {
                 for (int i = 0; i < _n; i++) {
                     (int, int) parentsSelected = _parentSelector.GetPairedParsOnce();

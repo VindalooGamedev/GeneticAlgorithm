@@ -15,8 +15,7 @@ namespace GeneticAlgorithms {
         public override int MaxFit => _chromo[0].Fit;
 
         // Constructor
-        public FitSortGen(IChromoInt<TGene>[] chromos) : base(chromos)
-            => SortByFit();
+        public FitSortGen(IChromoInt<TGene>[] chromos) : base(chromos) => SortByFit();
 
         public override IChromoInt<TGene> GetPar(int i) => _chromo[i];
 

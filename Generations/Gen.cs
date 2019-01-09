@@ -4,10 +4,8 @@ namespace GeneticAlgorithms {
     public class Gen<TGene> {
         public enum FitSortConfig {
             None = 0,
-            Offs = 1,
-            Pars = 2,
-            ParsAndOffs = 3,
-            ParsAndOffsTogether = 4
+            Offs = 1,        Pars = 2,
+            ParsAndOffs = 3, ParsAndOffsTogether = 4
         }
         private IChromoInt<TGene>[] _chromos;
 
@@ -18,7 +16,7 @@ namespace GeneticAlgorithms {
         private int _offsLength;
         public int OffsLength {
             get => _offsLength;
-            private set {
+            set {
                 _offsLength = value;
                 _parsLength = _chromos.Length - _offsLength;
             }
@@ -27,7 +25,7 @@ namespace GeneticAlgorithms {
         private int _parsLength;
         public int ParsLength {
             get => _parsLength;
-            private set {
+            set {
                 _parsLength = value;
                 _offsLength = _chromos.Length - _parsLength;
             }
@@ -37,17 +35,13 @@ namespace GeneticAlgorithms {
         public int MaxFit { get; private set; }
         public int GenCount { get; private set; } = 0;
 
-        public IChromoInt<TGene> GetPar(int i)
-            => _chromos[i];
+        public IChromoInt<TGene> GetPar(int i) => _chromos[i];
 
-        public IChromoInt<TGene> GetOff(int i)
-            => _chromos[OffAdress(i)];
+        public IChromoInt<TGene> GetOff(int i) => _chromos[OffAdress(i)];
 
-        private int OffAdress(int i)
-            => _chromos.Length - OffsLength + i;
+        private int OffAdress(int i) => _chromos.Length - OffsLength + i;
 
-        public Gen(IChromoInt<TGene>[] chromos)
-            => _chromos = chromos;
+        public Gen(IChromoInt<TGene>[] chromos) => _chromos = chromos;
 
         public void UpdateData() {
             GenCount++;
@@ -105,26 +99,22 @@ namespace GeneticAlgorithms {
             Array.Copy(auxArray, 0, _chromos, OffAdress(0), length);
         }
 
-        public void SortByFitness(FitSortConfig sortConfig)
-            => _fitSortConfig = sortConfig;
+        public void SortByFit(FitSortConfig sortConfig) => _fitSortConfig = sortConfig;
 
-        private void SortAllByFit()
-            => SortByFitness(_chromos);
+        private void SortAllByFit() => SortByFit(_chromos);
 
-        private void SortByFitness(IChromoInt<TGene>[] chromoArray)
+        private void SortByFit(IChromoInt<TGene>[] chromoArray)
             => Array.Sort(chromoArray, (a, b) => b.Fit - a.Fit);
 
-        private void SortParsByFit()
-            => SortByFitness(0, ParsLength);
+        private void SortParsByFit() => SortByFit(0, ParsLength);
 
-        private void SortOffsByFit()
-            => SortByFitness(OffAdress(0), OffsLength);
+        private void SortOffsByFit() => SortByFit(OffAdress(0), OffsLength);
 
-        private void SortByFitness(int origin, int length) {
+        private void SortByFit(int origin, int length) {
             IChromoInt<TGene>[] auxArray = new IChromoInt<TGene>[ParsLength];
 
             Array.Copy(_chromos, origin, auxArray, 0, length);
-            SortByFitness(auxArray);
+            SortByFit(auxArray);
             Array.Copy(auxArray, 0, _chromos, origin, length);
         }
     }

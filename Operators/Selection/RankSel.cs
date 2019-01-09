@@ -5,11 +5,11 @@
     /// by sorting them fitness desc and giving a fixed step of more value for those with higher fitness.
     /// </summary>
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
-    public partial class RankSel<TGene> : SelBase<FitSortGen<TGene>, TGene> {
+    public partial class RankSel<TGene> : SelBase<TGene> {
         private int _n, 
                     _nsum;
 
-        public RankSel(FitSortGen<TGene> gen) => _gen = gen;
+        public RankSel(Gen<TGene> gen) => _gen = gen;
 
         protected override void PrepareData() {
             _n = _gen.ParsLength;

@@ -1,8 +1,8 @@
 ﻿namespace GeneticAlgorithms {
     class OnePointBreeder<TGene> : ICrossInt<TGene>, ISteaStaCrossInt<TGene> {
-        private GenBase<TGene> _gen;
+        private Gen<TGene> _gen;
 
-        public OnePointBreeder(GenBase<TGene> gen) => _gen = gen;
+        public OnePointBreeder(Gen<TGene> gen) => _gen = gen;
 
         public void MultipleCross((int, int)[] pars, IMutInt<TGene> mutator) {
             IChromoInt<TGene> par1,

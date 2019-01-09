@@ -5,14 +5,14 @@
     /// </summary>
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
     class DeleteNLastsCleaner<TGene> : IReplInt {
-        private FitSortGen<TGene> _gen;
+        private Gen<TGene> _gen;
         private int _n;
 
-        public DeleteNLastsCleaner(FitSortGen<TGene> gen, int n) {
+        public DeleteNLastsCleaner(Gen<TGene> gen, int n) {
             _gen = gen;
             _n = n;
         }
 
-        public void MakeRoom() => _gen.RemoveLasts(_n);
+        public void MakeRoom() => _gen.OffsLength = _n;
     }
 }

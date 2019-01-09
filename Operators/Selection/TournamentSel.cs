@@ -5,11 +5,11 @@
     /// fitness just need to select the lower index of parent selected.
     /// </summary>
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
-    public class TournamentSel<TGene> : SelBase<FitSortGen<TGene>, TGene> {
+    public class TournamentSel<TGene> : SelBase<TGene> {
         private int _k, 
                     _parsAmount;
 
-        public TournamentSel(FitSortGen<TGene> gen, int k) {
+        public TournamentSel(Gen<TGene> gen, int k) {
             _gen = gen;
             _k = k;
         }

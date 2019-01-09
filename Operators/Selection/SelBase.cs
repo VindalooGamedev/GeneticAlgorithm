@@ -1,7 +1,6 @@
 ﻿namespace GeneticAlgorithms {
-    public abstract class SelBase<TGen, TGene> : ISelInt, ISteStaSelInt
-        where TGen : GenBase<TGene> {
-        protected TGen _gen;
+    public abstract class SelBase<TGene> : ISelInt, ISteStaSelInt  {
+        protected Gen<TGene> _gen;
 
         public (int, int)[] GetPairedParsForEveryOff() {
             (int, int)[] pairedPars = new(int, int)[_gen.OffsLength];

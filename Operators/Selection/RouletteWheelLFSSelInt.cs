@@ -7,11 +7,11 @@
     /// where all values are high and there is almost no weight on being higher.
     /// </summary>
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
-    public partial class RouletteWheelLFSSelInt<TGene> : SelBase<GenBase<TGene>, TGene> {
+    public partial class RouletteWheelLFSSelInt<TGene> : SelBase<TGene> {
         private int[] _fits;
         private int _fitsSum;
 
-        public RouletteWheelLFSSelInt(GenBase<TGene> gen) => _gen = gen;
+        public RouletteWheelLFSSelInt(Gen<TGene> gen) => _gen = gen;
 
         protected override void PrepareData() {
             int initialSum = 0;
