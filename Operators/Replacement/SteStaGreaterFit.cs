@@ -25,7 +25,9 @@ namespace GeneticAlgorithms {
             Array.Sort(indexes, (a, b) => parsAndOffs[b].Fit - parsAndOffs[a].Fit);
 
             // Function to know if they are parents through their original position
+            // Func<int, bool> IsPar = (int i) => indexes[i] < 2; // Alternative C#6
             bool IsPar(int i) => indexes[i] < 2;
+            
             
             // If thos at lastest position are both parents then change both and return
             if ((IsPar(2)) && (IsPar(3))) {

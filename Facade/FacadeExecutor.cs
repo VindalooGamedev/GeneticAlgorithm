@@ -77,18 +77,18 @@ namespace GeneticAlgorithms {
 
         // Generation Type.
         protected internal void DoSetGeneration(IChromoInt<TGene>[] chromosomes) 
-            => _gen = new FitSortGen<TGene>(chromosomes);
+            => _gen = new Gen<TGene>(chromosomes);
 
         // Replacement Strategy.
         protected internal void DoSetDeleteNLastsCleaner(int n) 
-            => _cleaner = new DeleteNLastsCleaner<TGene>((FitSortGen<TGene>)_gen, n);
+            => _cleaner = new DeleteNLastsCleaner<TGene>(_gen, n);
 
         // Selection Strategy.
         protected internal void DoSetTournamentSelector(int k) 
-            => _parentSelector = new TournamentSel<TGene>((FitSortGen<TGene>)_gen, k);
+            => _parentSelector = new TournamentSel<TGene>(_gen, k);
 
         protected internal void DoSetRankSelector() 
-            => _parentSelector = new RankSel<TGene>((FitSortGen<TGene>)_gen);
+            => _parentSelector = new RankSel<TGene>(_gen);
 
         internal void DoSetRouletteWheelSelector()
             => _parentSelector = new RouletteWheelSelInt<TGene>(_gen);

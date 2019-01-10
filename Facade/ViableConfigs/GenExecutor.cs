@@ -1,5 +1,5 @@
 ﻿namespace GeneticAlgorithms {
-    public partial class GenExecutor<TGene> {
+    public partial class GenExecutor<TGene> : IExecutor<TGene> {
         public Gen<TGene> _gen;
         public ITermCondInt<TGene> _termCond;
         public ISelInt _parentSelector;
@@ -13,5 +13,7 @@
             }
             return new SolutionInt<TGene>(_gen);
         }
+
+        public void SetGeneration(Gen<TGene> generation) => _gen = generation;
     }
 }
