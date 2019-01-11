@@ -4,14 +4,37 @@ namespace GeneticAlgorithms {
     public class Gen<TGene> {
         public enum FitSortConfig {
             None = 0,
-            Offs = 1,        Pars = 2,
-            ParsAndOffs = 3, ParsAndOffsTogether = 4
+            Offs = 1, Pars = 2,
+            ParsAndOffs = 4, ParsAndOffsTogether = 8
         }
+
+        private enum FitSortNeeds { None = 0, Offs = 1, Pars = 2 }
+
         private IChromoInt<TGene>[] _chromos;
 
         private FitSortConfig _fitSortConfig;
+        public FitSortConfig SortConfig {
+            get => _fitSortConfig;
+            set {
+                _fitSortConfig = value;
+                switch (value) {
+                    case FitSortConfig.None: _sortNeeds = FitSortNeeds.None; break;
+                    case FitSortConfig.Offs: _sortNeeds = FitSortNeeds.Offs; break;
+                    case FitSortConfig.Pars: _sortNeeds = FitSortNeeds.Pars; break;
+                    case FitSortConfig.ParsAndOffs:
+                        _sortNeeds = FitSortNeeds.Offs | FitSortNeeds.Pars;
+                        break;
+                    case FitSortConfig.ParsAndOffsTogether:
+                        _sortNeeds = FitSortNeeds.Offs | FitSortNeeds.Pars;
+                        break;
+                }
+            }
+        }
 
-        private bool IsUnsorted { get; set; } = true;
+        private FitSortNeeds _mustBeSorted;
+        private FitSortNeeds _sortNeeds;
+
+        private bool MustBeSorted => (_mustBeSorted & _sortNeeds) != FitSortNeeds.None;
 
         private int _offsLength;
         public int OffsLength {
@@ -35,9 +58,15 @@ namespace GeneticAlgorithms {
         public int MaxFit { get; private set; }
         public int GenCount { get; private set; } = 0;
 
-        public IChromoInt<TGene> GetPar(int i) => _chromos[i];
+        public IChromoInt<TGene> GetPar(int i) {
+            _mustBeSorted |= FitSortNeeds.Pars;
+            return _chromos[i];
+        }
 
-        public IChromoInt<TGene> GetOff(int i) => _chromos[OffAdress(i)];
+        public IChromoInt<TGene> GetOff(int i) {
+            _mustBeSorted |= FitSortNeeds.Offs;
+            return _chromos[OffAdress(i)];
+        }
 
         private int OffAdress(int i) => _chromos.Length - OffsLength + i;
 
@@ -56,7 +85,7 @@ namespace GeneticAlgorithms {
                         break;
                     case FitSortConfig.ParsAndOffsTogether: SortAllByFit(); break;
                 }
-                IsUnsorted = false;
+                _mustBeSorted = FitSortNeeds.None;
             }
 
             if ((int)_fitSortConfig > 1) {
@@ -68,27 +97,24 @@ namespace GeneticAlgorithms {
                 MinFit = int.MaxValue;
                 for (int i = 0; i < ParsLength; i++) {
                     int observedFit = GetPar(i).Fit;
-                    if (observedFit > MinFit) {
-                        MaxFit = observedFit;
-                    }
-                    if (observedFit < MinFit) {
-                        MaxFit = observedFit;
-                    }
+                    if (observedFit > MaxFit) { MaxFit = observedFit; }
+                    if (observedFit < MinFit) { MinFit = observedFit; }
                 }
             }
         }
 
-        private bool MustBeSorted => _fitSortConfig != FitSortConfig.None && IsUnsorted;
 
         public void Switch(int parentId, int offspringId) {
             IChromoInt<TGene> auxParent = GetPar(parentId);
             _chromos[parentId] = GetOff(offspringId);
             _chromos[OffAdress(offspringId)] = auxParent;
-            IsUnsorted = true;
+            _mustBeSorted = FitSortNeeds.Offs | FitSortNeeds.Pars;
         }
 
-        public void FullSwitch()
-            => SwitchChunk((ParsLength <= OffsLength) ? ParsLength : OffsLength);
+        public void FullSwitch() {
+            SwitchChunk((ParsLength <= OffsLength) ? ParsLength : OffsLength);
+            _mustBeSorted = FitSortNeeds.Offs | FitSortNeeds.Pars;
+        }
 
         public void SwitchChunk(int length) {
             IChromoInt<TGene>[] auxArray = new IChromoInt<TGene>[length];
@@ -97,9 +123,8 @@ namespace GeneticAlgorithms {
             Array.Copy(_chromos, chunkOffset, auxArray, 0, length);
             Array.Copy(_chromos, OffAdress(0), _chromos, chunkOffset, length);
             Array.Copy(auxArray, 0, _chromos, OffAdress(0), length);
+            _mustBeSorted = FitSortNeeds.Offs | FitSortNeeds.Pars;
         }
-
-        public void SortByFit(FitSortConfig sortConfig) => _fitSortConfig = sortConfig;
 
         private void SortAllByFit() => SortByFit(_chromos);
 
