@@ -2,17 +2,15 @@
 
 namespace GeneticAlgorithms {
     public class SteStaReplGreaterFit<TGene> : ISteStaReplInt<TGene> {
-        private Gen<TGene> _gen;
-
-        public SteStaReplGreaterFit(Gen<TGene> gen) => _gen = gen;
+        public Gen<TGene> Gen { get; set; }
 
         public void ReplaceComparingWithOffs((int, int) pars) {
             // Catch all chromosomes sorted by offsprings after parents
             IChromoInt<TGene>[] parsAndOffs = {
-                _gen.GetPar(pars.Item1),
-                _gen.GetPar(pars.Item2),
-                _gen.GetOff(0),
-                _gen.GetOff(1)
+                Gen.GetPar(pars.Item1),
+                Gen.GetPar(pars.Item2),
+                Gen.GetOff(0),
+                Gen.GetOff(1)
             };
 
             // Dereference chromosomes with indexes to maintain their position
@@ -31,20 +29,20 @@ namespace GeneticAlgorithms {
 
             // If thos at lastest position are both parents then change both and return
             if ((IsPar(2)) && (IsPar(3))) {
-                _gen.Switch(pars.Item1, 0);
-                _gen.Switch(pars.Item2, 1);
+                Gen.Switch(pars.Item1, 0);
+                Gen.Switch(pars.Item2, 1);
                 return;
             }
 
             // if the one in the third position is parent then change it and return
             if (IsPar(2)) {
-                _gen.Switch((IsPar(0)) ? indexes[0] : indexes[1], indexes[2]);
+                Gen.Switch((IsPar(0)) ? indexes[0] : indexes[1], indexes[2]);
                 return;
             }
 
             // if the one in the fourth position is parent then change it and return
             if (IsPar(3)) {
-                _gen.Switch((IsPar(0)) ? indexes[0] : indexes[1], indexes[3]);
+                Gen.Switch((IsPar(0)) ? indexes[0] : indexes[1], indexes[3]);
                 return;
             }
         }

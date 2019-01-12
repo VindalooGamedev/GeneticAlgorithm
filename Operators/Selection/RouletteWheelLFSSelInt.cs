@@ -10,22 +10,20 @@
     public partial class RouletteWheelLFSSelInt<TGene> : SelBase<TGene> {
         private int[] _fits;
         private int _fitsSum;
-
-        public RouletteWheelLFSSelInt(Gen<TGene> gen) : base(gen) { }
-
+        
         protected override void PrepareData() {
             int initialSum = 0;
-            for (int i = 0; i < _gen.ParsLength; i++) {
-                initialSum += _gen.GetPar(i).Fit;
+            for (int i = 0; i < Gen.ParsLength; i++) {
+                initialSum += Gen.GetPar(i).Fit;
             }
 
-            int mean = initialSum / _gen.ParsLength;
-            int min = mean - (_gen.MaxFit - mean);
+            int mean = initialSum / Gen.ParsLength;
+            int min = mean - (Gen.MaxFit - mean);
 
 
-            _fits = new int[_gen.ParsLength];
-            for (int i = 0; i < _gen.ParsLength; i++) {
-                _fits[i] = _gen.GetPar(i).Fit - min;
+            _fits = new int[Gen.ParsLength];
+            for (int i = 0; i < Gen.ParsLength; i++) {
+                _fits[i] = Gen.GetPar(i).Fit - min;
                 if (_fits[i] < 0) {
                     _fits[i] = 0;
                 }

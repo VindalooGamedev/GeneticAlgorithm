@@ -7,13 +7,11 @@
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
     public partial class RouletteWheelSelInt<TGene> : SelBase<TGene> {
         private int _fitsSum;
-
-        public RouletteWheelSelInt(Gen<TGene> gen) : base(gen) { }
-
+        
         protected override void PrepareData() {
             _fitsSum = 0;
-            for (int i = 0; i < _gen.ParsLength; i++) {
-                _fitsSum += _gen.GetPar(i).Fit;
+            for (int i = 0; i < Gen.ParsLength; i++) {
+                _fitsSum += Gen.GetPar(i).Fit;
             }
         }
 
@@ -22,20 +20,20 @@
             int chromo = -1;
             do {
                 chromo++;
-                pos -= _gen.GetPar(chromo).Fit;
+                pos -= Gen.GetPar(chromo).Fit;
             } while (pos > 0);
             return chromo;
         }
 
         protected override int GetSecondPar(int otherPar) {
-            int pos = Randomizer.Next(0, _fitsSum - (_gen.GetPar(otherPar).Fit));
+            int pos = Randomizer.Next(0, _fitsSum - (Gen.GetPar(otherPar).Fit));
             int chromo = -1;
             do {
                 chromo++;
                 if (chromo == otherPar) {
                     chromo++;
                 }
-                pos -= _gen.GetPar(chromo).Fit;
+                pos -= Gen.GetPar(chromo).Fit;
             } while (pos > 0);
             return chromo;
         }

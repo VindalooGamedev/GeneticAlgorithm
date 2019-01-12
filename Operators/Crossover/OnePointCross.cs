@@ -1,18 +1,18 @@
 ﻿namespace GeneticAlgorithms {
     class OnePointCross<TGene> : ICrossInt<TGene>, ISteaStaCrossInt<TGene> {
-        private Gen<TGene> _gen;
+        public Gen<TGene> Gen { get; set; }
 
-        public OnePointCross(Gen<TGene> gen) => _gen = gen;
+        public OnePointCross(Gen<TGene> gen) => Gen = gen;
 
         public void MultipleCross((int, int)[] pars, IMutInt<TGene> mutator) {
             IChromoInt<TGene> par1,
                               par2,
                               off;
 
-            for (int i = 0; i < _gen.OffsLength; i++) {
-                par1 = _gen.GetPar(pars[i].Item1);
-                par2 = _gen.GetPar(pars[i].Item2);
-                off = _gen.GetOff(i);
+            for (int i = 0; i < Gen.OffsLength; i++) {
+                par1 = Gen.GetPar(pars[i].Item1);
+                par2 = Gen.GetPar(pars[i].Item2);
+                off = Gen.GetOff(i);
 
                 int crossPoint = Randomizer.Next(off.Length - 1);
 
@@ -29,10 +29,10 @@
         }
 
         public void SimpleCrossWithMultipleSolutions((int, int) parents, IMutInt<TGene> mutator) {
-            IChromoInt<TGene> par1 = _gen.GetPar(parents.Item1);
-            IChromoInt<TGene> par2 = _gen.GetPar(parents.Item2);
-            IChromoInt<TGene> off1 = _gen.GetOff(0);
-            IChromoInt<TGene> off2 = _gen.GetOff(1);
+            IChromoInt<TGene> par1 = Gen.GetPar(parents.Item1);
+            IChromoInt<TGene> par2 = Gen.GetPar(parents.Item2);
+            IChromoInt<TGene> off1 = Gen.GetOff(0);
+            IChromoInt<TGene> off2 = Gen.GetOff(1);
 
             int crossPoint = Randomizer.Next(off1.Length - 1);
 

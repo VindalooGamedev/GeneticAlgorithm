@@ -5,14 +5,11 @@
     /// </summary>
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
     class DeleteNLastsRepl<TGene> : IReplInt<TGene> {
-        private Gen<TGene> _gen;
+        public Gen<TGene> Gen { get; set; }
         private int _n;
 
-        public DeleteNLastsRepl(Gen<TGene> gen, int n) {
-            _gen = gen;
-            _n = n;
-        }
+        public DeleteNLastsRepl(int n) => _n = n;
 
-        public void MakeRoom() => _gen.OffsLength = _n;
+        public void MakeRoom() => Gen.OffsLength = _n;
     }
 }

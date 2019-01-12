@@ -9,9 +9,9 @@
         private int _k,
                     _parsAmount;
 
-        public TournamentSel(Gen<TGene> gen, int k) : base(gen) => _k = k;
+        public TournamentSel(int k) => _k = k;
 
-        protected override void PrepareData() => _parsAmount = _gen.ParsLength;
+        protected override void PrepareData() => _parsAmount = Gen.ParsLength;
 
         protected override int GetFirstPar() => ParSelected(_parsAmount, _k);
 

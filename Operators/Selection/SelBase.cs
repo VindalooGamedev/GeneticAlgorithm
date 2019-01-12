@@ -1,11 +1,9 @@
 ﻿namespace GeneticAlgorithms {
     public abstract class SelBase<TGene> {
-        protected Gen<TGene> _gen;
-
-        public SelBase(Gen<TGene> gen) => _gen = gen;
+        public Gen<TGene> Gen { get; set; }
 
         public (int, int)[] GetPairedParsForEveryOff() {
-            (int, int)[] pairedPars = new(int, int)[_gen.OffsLength];
+            (int, int)[] pairedPars = new(int, int)[Gen.OffsLength];
             PrepareData();
 
             // Choose all pairs.

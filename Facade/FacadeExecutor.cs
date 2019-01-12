@@ -25,23 +25,23 @@ namespace GeneticAlgorithms {
             return (IGenerationSetted)item;
         }
 
-        public static IReplacementSetted DeleteNLastsCleaner<TGene>(this IGenerationSetted item, Gen<TGene> gen, int n) {
-            ((Executor<TGene>)item).DoSetDeleteNLastsCleaner(gen, n);
+        public static IReplacementSetted DeleteNLastsCleaner<TGene>(this IGenerationSetted item, int n) {
+            ((Executor<TGene>)item).DoSetDeleteNLastsCleaner(n);
             return (IReplacementSetted)item;
         }
 
-        public static ISelectionSetted TournamentSelector<TGene>(this IReplacementSetted item, Gen<TGene> gen, int k) {
-            ((Executor<TGene>)item).DoSetTournamentSelector(gen, k);
+        public static ISelectionSetted TournamentSelector<TGene>(this IReplacementSetted item, int k) {
+            ((Executor<TGene>)item).DoSetTournamentSelector(k);
             return (ISelectionSetted)item;
         }
 
-        public static ISelectionSetted RankSelector<TGene>(this IReplacementSetted item, Gen<TGene> gen) {
-            ((Executor<TGene>)item).DoSetRankSelector(gen);
+        public static ISelectionSetted RankSelector<TGene>(this IReplacementSetted item) {
+            ((Executor<TGene>)item).DoSetRankSelector();
             return (ISelectionSetted)item;
         }
 
-        public static ISelectionSetted RouletteWheelSelector<TGene>(this IReplacementSetted item, Gen<TGene> gen) {
-            ((Executor<TGene>)item).DoSetRouletteWheelSelector(gen);
+        public static ISelectionSetted RouletteWheelSelector<TGene>(this IReplacementSetted item) {
+            ((Executor<TGene>)item).DoSetRouletteWheelSelector();
             return (ISelectionSetted)item;
         }
 
@@ -80,21 +80,21 @@ namespace GeneticAlgorithms {
             => _gen = new Gen<TGene>(chromosomes);
 
         // Replacement Strategy.
-        protected internal void DoSetDeleteNLastsCleaner(Gen<TGene> gen, int n)
-            => _cleaner = new DeleteNLastsRepl<TGene>(gen, n);
+        protected internal void DoSetDeleteNLastsCleaner(int n)
+            => _cleaner = new DeleteNLastsRepl<TGene>(n);
 
         // Selection Strategy.
-        protected internal void DoSetTournamentSelector(Gen<TGene> gen, int k)
-            => _parentSelector = new TournamentSel<TGene>(gen, k);
+        protected internal void DoSetTournamentSelector(int k)
+            => _parentSelector = new TournamentSel<TGene>(k);
 
-        protected internal void DoSetRankSelector(Gen<TGene> gen)
-            => _parentSelector = new RankSel<TGene>(gen);
+        protected internal void DoSetRankSelector()
+            => _parentSelector = new RankSel<TGene>();
 
-        internal void DoSetRouletteWheelSelector(Gen<TGene> gen)
-            => _parentSelector = new RouletteWheelSelInt<TGene>(gen);
+        internal void DoSetRouletteWheelSelector()
+            => _parentSelector = new RouletteWheelSelInt<TGene>();
 
         internal void DoSetRouletteWheelLFSSelector(Gen<TGene> gen)
-            => _parentSelector = new RouletteWheelLFSSelInt<TGene>(gen);
+            => _parentSelector = new RouletteWheelLFSSelInt<TGene>();
 
         // Crossover Strategy.
         //protected internal void DoSetCrossover()  => _breeder = new UniformBreeder<TGene>(_generation);

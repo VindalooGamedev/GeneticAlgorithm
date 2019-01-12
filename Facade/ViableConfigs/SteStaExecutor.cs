@@ -6,6 +6,8 @@
         public ISteaStaCrossInt<TGene> _breeder;
 
         protected override void ExecuteRun() {
+            _coordinator.Gen = _gen;
+            _breeder.Gen = _gen;
             _gen.OffsLength = 2;
             while (!_termCond.IsMetIn(_gen)) {
                 (int, int) parentsSelected = _parentSelector.GetPairedParsOnce();

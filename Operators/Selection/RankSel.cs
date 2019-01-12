@@ -9,10 +9,8 @@
         private int _n,
                     _nsum;
 
-        public RankSel(Gen<TGene> gen) : base(gen) { }
-
         protected override void PrepareData() {
-            _n = _gen.ParsLength;
+            _n = Gen.ParsLength;
 
             // Gauss formula (Sum of n first numbers).
             _nsum = _n * (_n + 1) / 2;

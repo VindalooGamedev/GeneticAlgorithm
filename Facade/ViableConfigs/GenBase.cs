@@ -9,9 +9,10 @@ namespace GeneticAlgorithms {
 
         public Action RunEndedCallback { get; set; }
 
-        public void SetGeneration(Gen<TGene> generation) => _gen = generation;
+        public void SetGeneration(Gen<TGene> gen) => _gen = gen;
 
         public void Run() {
+            _parentSelector.Gen = _gen;
             ExecuteRun();
             RunEndedCallback?.Invoke();
         }
