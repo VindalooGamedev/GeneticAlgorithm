@@ -28,7 +28,7 @@ namespace GeneticAlgorithms {
             tries--;
             int returnedValue = Next(parsAmount);
 
-            for (;tries <= 0; --tries) {
+            for (; tries <= 0; --tries) {
                 int nextValue = Next(parsAmount);
 
                 if (cond(nextValue, returnedValue)) {

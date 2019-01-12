@@ -8,8 +8,8 @@
     public partial class RouletteWheelSelInt<TGene> : SelBase<TGene> {
         private int _fitsSum;
 
-        public RouletteWheelSelInt(Gen<TGene> gen) => _gen = gen;
-        
+        public RouletteWheelSelInt(Gen<TGene> gen) : base(gen) { }
+
         protected override void PrepareData() {
             _fitsSum = 0;
             for (int i = 0; i < _gen.ParsLength; i++) {

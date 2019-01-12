@@ -6,13 +6,10 @@
     /// </summary>
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
     public class TournamentSel<TGene> : SelBase<TGene> {
-        private int _k, 
+        private int _k,
                     _parsAmount;
 
-        public TournamentSel(Gen<TGene> gen, int k) {
-            _gen = gen;
-            _k = k;
-        }
+        public TournamentSel(Gen<TGene> gen, int k) : base(gen) => _k = k;
 
         protected override void PrepareData() => _parsAmount = _gen.ParsLength;
 

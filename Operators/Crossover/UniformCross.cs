@@ -4,10 +4,10 @@
     /// selecting one of the parents gene at 50% of chance each.
     /// </summary>
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
-    public class UniformBreeder<TGene> : ICrossInt<TGene>, ISteaStaCrossInt<TGene> {
+    public class UniformCross<TGene> : ICrossInt<TGene>, ISteaStaCrossInt<TGene> {
         private Gen<TGene> _gen;
 
-        public UniformBreeder(Gen<TGene> gen) => _gen = gen;
+        public UniformCross(Gen<TGene> gen) => _gen = gen;
 
         public void MultipleCross((int, int)[] pars, IMutInt<TGene> mutator) {
             IChromoInt<TGene> par1,

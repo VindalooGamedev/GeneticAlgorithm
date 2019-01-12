@@ -4,11 +4,11 @@
     /// The implementation of this operator is supported by the FitnessSortedGeneration method RemoveLasts(n).
     /// </summary>
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
-    class DeleteNLastsCleaner<TGene> : IReplInt {
+    class DeleteNLastsRepl<TGene> : IReplInt<TGene> {
         private Gen<TGene> _gen;
         private int _n;
 
-        public DeleteNLastsCleaner(Gen<TGene> gen, int n) {
+        public DeleteNLastsRepl(Gen<TGene> gen, int n) {
             _gen = gen;
             _n = n;
         }

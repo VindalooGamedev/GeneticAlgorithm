@@ -9,6 +9,6 @@
 
         public GenNumberReachedInt(int max) => _maxGen = max;
 
-        public bool IsMetIn (Gen<TGene> gen) => gen.GenCount >= _maxGen;
+        public bool IsMetIn(Gen<TGene> gen) => gen.GenCount >= _maxGen;
     }
 }

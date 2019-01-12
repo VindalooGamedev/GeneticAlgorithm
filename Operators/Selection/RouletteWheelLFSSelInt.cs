@@ -11,7 +11,7 @@
         private int[] _fits;
         private int _fitsSum;
 
-        public RouletteWheelLFSSelInt(Gen<TGene> gen) => _gen = gen;
+        public RouletteWheelLFSSelInt(Gen<TGene> gen) : base(gen) { }
 
         protected override void PrepareData() {
             int initialSum = 0;

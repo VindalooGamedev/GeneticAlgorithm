@@ -6,10 +6,10 @@
     /// </summary>
     /// <typeparam name="TGene">Type of the genes uses in the chromosome definition.</typeparam>
     public partial class RankSel<TGene> : SelBase<TGene> {
-        private int _n, 
+        private int _n,
                     _nsum;
 
-        public RankSel(Gen<TGene> gen) => _gen = gen;
+        public RankSel(Gen<TGene> gen) : base(gen) { }
 
         protected override void PrepareData() {
             _n = _gen.ParsLength;

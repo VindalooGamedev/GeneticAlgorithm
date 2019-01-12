@@ -65,10 +65,10 @@ namespace GeneticAlgorithms {
 
         public IChromoInt<TGene> GetOff(int i) {
             _mustBeSorted |= FitSortNeeds.Offs;
-            return _chromos[OffAdress(i)];
+            return _chromos[OffAddress(i)];
         }
 
-        private int OffAdress(int i) => _chromos.Length - OffsLength + i;
+        private int OffAddress(int i) => _chromos.Length - OffsLength + i;
 
         public Gen(IChromoInt<TGene>[] chromos) => _chromos = chromos;
 
@@ -107,7 +107,7 @@ namespace GeneticAlgorithms {
         public void Switch(int parentId, int offspringId) {
             IChromoInt<TGene> auxParent = GetPar(parentId);
             _chromos[parentId] = GetOff(offspringId);
-            _chromos[OffAdress(offspringId)] = auxParent;
+            _chromos[OffAddress(offspringId)] = auxParent;
             _mustBeSorted = FitSortNeeds.Offs | FitSortNeeds.Pars;
         }
 
@@ -121,8 +121,8 @@ namespace GeneticAlgorithms {
             int chunkOffset = ParsLength - length;
 
             Array.Copy(_chromos, chunkOffset, auxArray, 0, length);
-            Array.Copy(_chromos, OffAdress(0), _chromos, chunkOffset, length);
-            Array.Copy(auxArray, 0, _chromos, OffAdress(0), length);
+            Array.Copy(_chromos, OffAddress(0), _chromos, chunkOffset, length);
+            Array.Copy(auxArray, 0, _chromos, OffAddress(0), length);
             _mustBeSorted = FitSortNeeds.Offs | FitSortNeeds.Pars;
         }
 
@@ -133,7 +133,7 @@ namespace GeneticAlgorithms {
 
         private void SortParsByFit() => SortByFit(0, ParsLength);
 
-        private void SortOffsByFit() => SortByFit(OffAdress(0), OffsLength);
+        private void SortOffsByFit() => SortByFit(OffAddress(0), OffsLength);
 
         private void SortByFit(int origin, int length) {
             IChromoInt<TGene>[] auxArray = new IChromoInt<TGene>[ParsLength];

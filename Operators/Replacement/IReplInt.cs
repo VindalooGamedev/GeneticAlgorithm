@@ -1,5 +1,5 @@
 ﻿namespace GeneticAlgorithms {
-    public interface IReplInt {
+    public interface IReplInt<TGene> {
         void MakeRoom();
     }
 

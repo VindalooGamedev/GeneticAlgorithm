@@ -1,10 +1,10 @@
 ﻿using System;
 
 namespace GeneticAlgorithms {
-    public class SteStaGreaterFit<TGene> : ISteStaReplInt<TGene> {
+    public class SteStaReplGreaterFit<TGene> : ISteStaReplInt<TGene> {
         private Gen<TGene> _gen;
 
-        public SteStaGreaterFit(Gen<TGene> gen) => _gen = gen;
+        public SteStaReplGreaterFit(Gen<TGene> gen) => _gen = gen;
 
         public void ReplaceComparingWithOffs((int, int) pars) {
             // Catch all chromosomes sorted by offsprings after parents
@@ -27,8 +27,8 @@ namespace GeneticAlgorithms {
             // Function to know if they are parents through their original position
             // Func<int, bool> IsPar = (int i) => indexes[i] < 2; // Alternative C#6
             bool IsPar(int i) => indexes[i] < 2;
-            
-            
+
+
             // If thos at lastest position are both parents then change both and return
             if ((IsPar(2)) && (IsPar(3))) {
                 _gen.Switch(pars.Item1, 0);
@@ -37,7 +37,7 @@ namespace GeneticAlgorithms {
             }
 
             // if the one in the third position is parent then change it and return
-            if (IsPar(2)){
+            if (IsPar(2)) {
                 _gen.Switch((IsPar(0)) ? indexes[0] : indexes[1], indexes[2]);
                 return;
             }
