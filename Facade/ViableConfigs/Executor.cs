@@ -3,14 +3,14 @@
         public IReplInt<TGene> _cleaner;
         public ICrossInt<TGene> _breeder;
 
-        protected override void ExecuteRun() {
+        protected override void PrepareToRun() {
             _cleaner.Gen = _gen;
             _breeder.Gen = _gen;
-            while (!_termCond.IsMetIn(_gen)) {
-                _cleaner.MakeRoom();
-                _breeder.MultipleCross(_parentSelector.GetPairedParsForEveryOff(), _mutator);
-                _gen.UpdateData();
-            }
+        }
+
+        protected override void Cycle() {
+            _cleaner.MakeRoom();
+            _breeder.MultipleCross(_parentSelector.GetPairedParsForEveryOff(), _mutator);
         }
     }
 }

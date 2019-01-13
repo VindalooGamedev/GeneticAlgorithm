@@ -1,15 +1,10 @@
-﻿using System;
-
-namespace GeneticAlgorithms {
+﻿namespace GeneticAlgorithms {
     public partial class GenExecutor<TGene> : ExecutorBase<TGene> {
         public ICrossInt<TGene> _breeder;
 
-        protected override void ExecuteRun() {
-            _breeder.Gen = _gen;
-            while (!_termCond.IsMetIn(_gen)) {
-                _breeder.MultipleCross(_parentSelector.GetPairedParsForEveryOff(), _mutator);
-                _gen.UpdateData();
-            }
-        }
+        protected override void Cycle() 
+            => _breeder.MultipleCross(_parentSelector.GetPairedParsForEveryOff(), _mutator);
+
+        protected override void PrepareToRun() => _breeder.Gen = _gen;
     }
 }

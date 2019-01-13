@@ -13,10 +13,15 @@ namespace GeneticAlgorithms {
 
         public void Run() {
             _parentSelector.Gen = _gen;
-            ExecuteRun();
+            PrepareToRun();
+            while (!_termCond.IsMetIn(_gen)) {
+                Cycle();
+                _gen.UpdateData();
+            }
             RunEndedCallback?.Invoke();
         }
 
-        protected abstract void ExecuteRun();
+        protected abstract void PrepareToRun();
+        protected abstract void Cycle();
     }
 }

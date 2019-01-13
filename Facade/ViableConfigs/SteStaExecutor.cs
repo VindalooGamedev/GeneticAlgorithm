@@ -5,16 +5,16 @@
         public ISteStaReplInt<TGene> _coordinator;
         public ISteaStaCrossInt<TGene> _breeder;
 
-        protected override void ExecuteRun() {
+        protected override void PrepareToRun() {
             _coordinator.Gen = _gen;
             _breeder.Gen = _gen;
             _gen.OffsLength = 2;
-            while (!_termCond.IsMetIn(_gen)) {
-                (int, int) parentsSelected = _parentSelector.GetPairedParsOnce();
-                _breeder.SimpleCrossWithMultipleSolutions(parentsSelected, _mutator);
-                _coordinator.ReplaceComparingWithOffs(parentsSelected);
-                _gen.UpdateData();
-            }
+        }
+
+        protected override void Cycle() {
+            (int, int) parentsSelected = _parentSelector.GetPairedParsOnce();
+            _breeder.SimpleCrossWithMultipleSolutions(parentsSelected, _mutator);
+            _coordinator.ReplaceComparingWithOffs(parentsSelected);
         }
     }
 }

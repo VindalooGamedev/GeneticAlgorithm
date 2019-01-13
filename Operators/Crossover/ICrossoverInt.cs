@@ -6,7 +6,6 @@
 
     public interface ISteaStaCrossInt<TGene> {
         Gen<TGene> Gen { get; set; }
-
         void SimpleCrossWithMultipleSolutions((int, int) parents, IMutInt<TGene> mutator);
     }
 }
